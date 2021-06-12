@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   siteMetadata: {
     title: 'asalato-site',
@@ -5,7 +7,17 @@ module.exports = {
   plugins: [
     'gatsby-plugin-emotion',
     'gatsby-plugin-gatsby-cloud',
-    'gatsby-plugin-resolve-src',
+    'gatsby-plugin-typescript',
+    {
+      resolve: 'gatsby-plugin-root-import',
+      options: {
+        src: path.join(__dirname, 'src'),
+        pages: path.join(__dirname, 'src/pages'),
+        themes: path.join(__dirname, 'src/themes'),
+        components: path.join(__dirname, 'src/components'),
+        interfaces: path.join(__dirname, 'src/interfaces'),
+      },
+    },
     {
       resolve: 'gatsby-plugin-google-analytics',
       options: {

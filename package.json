@@ -22,8 +22,11 @@
     "gatsby-plugin-gatsby-cloud": "^2.7.1",
     "gatsby-plugin-google-analytics": "^3.7.1",
     "gatsby-plugin-manifest": "^3.7.1",
-    "gatsby-plugin-resolve-src": "^2.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "gatsby-plugin-root-import": "^2.0.6",
+    "gatsby-plugin-typescript": "^3.7.1"
   }
 }
