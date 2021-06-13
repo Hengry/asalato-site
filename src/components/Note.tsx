@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
+import NotationInput from './NotationInput';
+import { Solution } from 'interfaces/data';
+import Input from './Input';
 
 const Wrapper = styled.div`
-  border: 1px solid #000;
+  background-color: ${({ theme }) => theme.color.common.surface};
+  border-radius: 4px;
+  padding: 8px;
 `;
 
 interface NoteType {
+  selected: boolean;
   title: string;
   detail: string[];
 }
 const Note = (props: NoteType) => {
-  const { title, detail } = props;
+  const { selected, title, detail } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [solutions, setSolutions] = useState<Solution[]>([]);
+
+  useEffect(() => {
+    if (selected) inputRef.current?.focus();
+  }, []);
 
   return (
     <Wrapper>
-      <h3>{title}</h3>
+      {selected ? <Input ref={inputRef} /> : <div>{title}</div>}
       {detail.map((d) => (
         <div>{d}</div>
       ))}
@@ -23,6 +35,7 @@ const Note = (props: NoteType) => {
 };
 Note.defaultProps = {
   detail: [],
+  selected: false,
 };
 
 export default Note;

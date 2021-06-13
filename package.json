@@ -17,6 +17,8 @@
   "dependencies": {
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@headlessui/react": "^1.2.0",
+    "clsx": "^1.1.1",
     "gatsby": "^3.6.2",
     "gatsby-plugin-emotion": "^6.7.1",
     "gatsby-plugin-gatsby-cloud": "^2.7.1",
@@ -26,7 +28,11 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "gatsby-plugin-postcss": "^4.7.1",
     "gatsby-plugin-root-import": "^2.0.6",
-    "gatsby-plugin-typescript": "^3.7.1"
+    "gatsby-plugin-typescript": "^3.7.1",
+    "postcss": "^8.3.2",
+    "tailwindcss": "^2.1.4"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "tailwind.config.js"],
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "esnext",
@@ -7,10 +7,11 @@
     "lib": ["dom", "es2017"],
     "baseUrl": "./",
     "paths": {
-      "components/*": ["./src/components/*"],
       "pages/*": ["./src/pages/*"],
       "themes/*": ["./src/themes/*"],
-      "interfaces": ["./src/interfaces"]
+      "components/*": ["./src/components/*"],
+      "interfaces/*": ["./src/interfaces/*"],
+      "utils/*": ["./src/utils/*"]
     },
     // "allowJs": true,
     // "checkJs": true,

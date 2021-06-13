@@ -8,6 +8,7 @@ module.exports = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-gatsby-cloud',
     'gatsby-plugin-typescript',
+    'gatsby-plugin-postcss',
     {
       resolve: 'gatsby-plugin-root-import',
       options: {
@@ -16,6 +17,7 @@ module.exports = {
         themes: path.join(__dirname, 'src/themes'),
         components: path.join(__dirname, 'src/components'),
         interfaces: path.join(__dirname, 'src/interfaces'),
+        utils: path.join(__dirname, 'src/utils'),
       },
     },
     {
