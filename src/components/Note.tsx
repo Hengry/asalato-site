@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
+import { Dialog } from '@headlessui/react';
+
 import NotationInput from './NotationInput';
 import { Solution } from 'interfaces/data';
 import Input from './Input';
 
 const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.color.common.surface};
+  background-color: ${({ theme }) => theme.colors.common.surface};
   border-radius: 4px;
   padding: 8px;
 `;

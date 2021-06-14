@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Solver from './tools/Solver';
+import Solver from './tools/Resolver';
 
 interface InputProps {}
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {

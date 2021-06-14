@@ -25,11 +25,11 @@ const SideLine = styled.div`
   height: 100%;
   display: inline;
   position: absolute;
-  border-left: 2px solid ${({ theme }) => theme.color.common.text};
-  border-right: 2px solid ${({ theme }) => theme.color.common.text};
+  border-left: 2px solid ${({ theme }) => theme.colors.common.text};
+  border-right: 2px solid ${({ theme }) => theme.colors.common.text};
   left: -3px;
   width: 6px;
-  background-color: ${({ theme }) => theme.color.primary.dark};
+  background-color: ${({ theme }) => theme.colors.primary.dark};
 `;
 
 const Beat = styled.div`
@@ -40,8 +40,8 @@ const Beat = styled.div`
 const Bar = styled.div`
   padding: 0px 8px;
   display: inline-flex;
-  border-left: 2px solid ${({ theme }) => theme.color.common.text};
-  border-right: 2px solid ${({ theme }) => theme.color.common.text};
+  border-left: 2px solid ${({ theme }) => theme.colors.common.text};
+  border-right: 2px solid ${({ theme }) => theme.colors.common.text};
   &.multi-line {
     display: flex;
     flex-direction: column;

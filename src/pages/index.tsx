@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { ThemeProvider, css } from '@emotion/react';
+import { ThemeProvider } from '@emotion/react';
+import { Dialog } from '@headlessui/react';
 
 import GlobalStyle from 'components/GlobalStyle';
 import Note from 'components/Note';
 import DarkTheme from 'themes/darkTheme';
-import a from 'utils';
 
 declare module '@emotion/react' {
   export interface Theme {
-    color: {
+    colors: {
       primary: {
         main: string;
         dark: string;
@@ -41,12 +41,29 @@ const Main = styled.div`
 `;
 
 const IndexPage = () => {
+  const [open, setOpen] = useState(false);
   return (
     <ThemeProvider theme={DarkTheme}>
       <Main>
         <GlobalStyle />
         <title>Home Page</title>
         <Note title="test" selected />
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <Dialog.Overlay />
+
+          <Dialog.Title>Deactivate account</Dialog.Title>
+          <Dialog.Description>
+            This will permanently deactivate your account
+          </Dialog.Description>
+
+          <p>
+            Are you sure you want to deactivate your account? All of your data
+            will be permanently removed. This action cannot be undone.
+          </p>
+
+          <button onClick={() => setOpen(false)}>Deactivate</button>
+          <button onClick={() => setOpen(false)}>Cancel</button>
+        </Dialog>
       </Main>
     </ThemeProvider>
   );

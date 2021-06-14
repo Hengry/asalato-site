@@ -21,7 +21,7 @@ const StyledInput = styled.input`
   height: 18px;
   &:focus {
     outline: none;
-    border-bottom: 2px solid ${({ theme }) => theme.color.common.text};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.common.text};
     animation: ${blinking} 1s step-end infinite;
   }
 `;

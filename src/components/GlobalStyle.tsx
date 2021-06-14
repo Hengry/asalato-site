@@ -7,13 +7,13 @@ export default () => {
     <Global
       styles={css`
         body {
-          background: ${theme.color.common.background};
+          background: ${theme.colors.common.background};
           margin: 0px;
-          color: ${theme.color.common.text};
+          color: ${theme.colors.common.text};
           font-family: monospace;
         }
         input {
-          color: ${theme.color.common.text};
+          color: ${theme.colors.common.text};
           font-family: monospace;
           font-size: 20px;
           background-color: transparent;
@@ -22,6 +22,9 @@ export default () => {
           &:focus {
             outline: none;
           }
+        }
+        button:focus {
+          outline: none;
         }
       `}
     />
