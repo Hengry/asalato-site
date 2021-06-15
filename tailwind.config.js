@@ -15,6 +15,7 @@ module.exports = {
       yellow: colors.amber,
       background: '#121212',
       surface: '#212121',
+      main: '#827717',
     },
     extend: {},
   },

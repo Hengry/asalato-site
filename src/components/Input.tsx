@@ -10,8 +10,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         ref={ref}
         value={rythm}
         onChange={(e) => {
-          console.log(e.target.value);
-          setRythm(e.target.value + 'a');
+          setRythm(e.target.value);
         }}
       />
       <Solver />

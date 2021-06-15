@@ -283,7 +283,10 @@ type Options = {
   preferGrab?: boolean;
 };
 
-export const findPath = (rythm: string, options: Options = {}): Solution[] => {
+export const findPath = (
+  rythm: string = '',
+  options: Options = {}
+): Solution[] => {
   const {
     withAirTurn = false,
     withClick = true,

@@ -7,9 +7,6 @@ import clsx from 'clsx';
 import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
-  font-size: 20px;
-  font-family: monospace;
-  font-weight: bold;
   letter-spacing: 4px;
   position: relative;
   padding: 0px 0px;

@@ -15,10 +15,10 @@ export default () => {
         input {
           color: ${theme.colors.common.text};
           font-family: monospace;
-          font-size: 20px;
+          font-size: 16px;
           background-color: transparent;
           z-index: 1;
-          height: 18px;
+          height: 20px;
           &:focus {
             outline: none;
           }
