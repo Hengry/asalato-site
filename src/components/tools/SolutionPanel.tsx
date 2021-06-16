@@ -8,7 +8,7 @@ interface SolutionTableProps {
   onClose: () => void;
 }
 
-const SolutionTable = (props: SolutionTableProps) => {
+const SolutionPanel = (props: SolutionTableProps) => {
   const { rythm, onClose } = props;
   const solutions = useMemo(() => {
     return rythm ? findPath(rythm) : [];
@@ -23,4 +23,4 @@ const SolutionTable = (props: SolutionTableProps) => {
   );
 };
 
-export default SolutionTable;
+export default SolutionPanel;

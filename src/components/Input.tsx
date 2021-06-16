@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-import Solver from './tools/Resolver';
+import Resolver from './tools/Resolver';
+import SolutionPanel from './tools/SolutionPanel';
 
 interface InputProps {}
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const [rythm, setRythm] = useState<string>('');
+  const [input, setInput] = useState<string>('');
   return (
     <div>
       <input
         ref={ref}
-        value={rythm}
+        value={input}
         onChange={(e) => {
-          setRythm(e.target.value);
+          setInput(e.target.value);
         }}
       />
-      <Solver />
+      <Resolver
+        onSubmit={(trigger) => {
+          trigger(input);
+        }}
+      />
     </div>
   );
 });

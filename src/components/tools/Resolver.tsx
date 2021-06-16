@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 
 import { findPath } from 'utils/rythm';
@@ -6,23 +6,39 @@ import Tool from './Tool';
 import ToolPanel from './ToolPanel';
 import Note from 'components/Note';
 import Notation from 'components/Notation';
+import { Solution } from 'interfaces/data';
 
 interface ResolverProps {
-  input: string;
+  onSubmit: (trigger: (rythm: string) => void) => void;
 }
 
-const Resolver = (props) => {
-  const { onClick, input } = props;
-  const [open, setOpen] = useState(false);
+const Resolver = (props: ResolverProps) => {
+  const { onSubmit } = props;
+  const [solution, setSolution] = useState<Solution[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [rythm, setRythm] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
 
-  // const solutions = useMemo(() => {
-  //   return findPath(input, {});
-  // }, []);
-  // console.log(solutions);
-  const handleClicked = useCallback(() => {
-    onClick();
+  useEffect(() => {
+    if (rythm) {
+      setLoading(true);
+      const path = findPath(rythm);
+      setSolution(path);
+      setLoading(false);
+    }
+  }, [rythm]);
+  console.log(solution);
+
+  const trigger = useCallback((input: string) => {
+    console.log('trugger');
+    setRythm(input);
     setOpen(true);
   }, []);
+
+  const handleClicked = useCallback(() => {
+    onSubmit(trigger);
+  }, [onSubmit, trigger]);
+
   return (
     <>
       <div
@@ -34,7 +50,6 @@ const Resolver = (props) => {
       <Dialog
         open={open}
         onClose={() => {
-          console.log('d close');
           setOpen(false);
         }}
       >
@@ -42,13 +57,13 @@ const Resolver = (props) => {
         <Dialog.Title className="absolute z-10 top-0 inset-x-0 m-4">
           <Note title="test" />
         </Dialog.Title>
-        <Dialog.Description className="rounded absolute z-10 bg-surface top-16 bottom-0 inset-x-0 m-4 p-2">
+        <div className="rounded absolute z-10 bg-surface top-16 bottom-0 inset-x-0 m-4 p-2">
           <Notation values={['X']} />
           <button className="bg-main" onClick={() => setOpen(false)}>
             Deactivate
           </button>
           <button onClick={() => setOpen(false)}>Cancel</button>
-        </Dialog.Description>
+        </div>
       </Dialog>
     </>
   );
