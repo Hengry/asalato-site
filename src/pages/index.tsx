@@ -5,7 +5,9 @@ import { Dialog } from '@headlessui/react';
 
 import GlobalStyle from 'components/GlobalStyle';
 import Note from 'components/Note';
+import Resolver from 'components/tools/Resolver';
 import DarkTheme from 'themes/darkTheme';
+import { ResolverContext } from 'src/hooks/resolver';
 
 declare module '@emotion/react' {
   export interface Theme {
@@ -41,30 +43,17 @@ const Main = styled.div`
 `;
 
 const IndexPage = () => {
-  const [open, setOpen] = useState(false);
+  const [resolverInput, setResolverInput] = useState('');
   return (
     <ThemeProvider theme={DarkTheme}>
-      <Main>
-        <GlobalStyle />
-        <title>Home Page</title>
-        <Note title="test" selected />
-        <Dialog open={open} onClose={() => setOpen(false)}>
-          <Dialog.Overlay />
-
-          <Dialog.Title>Deactivate account</Dialog.Title>
-          <Dialog.Description>
-            This will permanently deactivate your account
-          </Dialog.Description>
-
-          <p>
-            Are you sure you want to deactivate your account? All of your data
-            will be permanently removed. This action cannot be undone.
-          </p>
-
-          <button onClick={() => setOpen(false)}>Deactivate</button>
-          <button onClick={() => setOpen(false)}>Cancel</button>
-        </Dialog>
-      </Main>
+      <ResolverContext.Provider value={setResolverInput}>
+        <Main>
+          <GlobalStyle />
+          <title>Home Page</title>
+          <Note title="test" selected />
+          <Resolver rythm={resolverInput} />
+        </Main>
+      </ResolverContext.Provider>
     </ThemeProvider>
   );
 };

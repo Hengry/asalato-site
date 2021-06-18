@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import Resolver from './tools/Resolver';
+import { useCallback } from 'react';
+import { useResolver } from 'src/hooks/resolver';
+import ResolverButton from './tools/ResolverButton';
 import SolutionPanel from './tools/SolutionPanel';
 
 interface InputProps {}
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const [input, setInput] = useState<string>('');
+  const triggerResolver = useResolver();
+  const handleButtonClicked = useCallback(() => {
+    triggerResolver(ref.current?.value);
+  }, [ref]);
   return (
     <div>
       <input
@@ -14,11 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           setInput(e.target.value);
         }}
       />
-      <Resolver
-        onSubmit={(trigger) => {
-          trigger(input);
-        }}
-      />
+      <ResolverButton onClick={handleButtonClicked} />
     </div>
   );
 });

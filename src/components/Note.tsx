@@ -6,12 +6,6 @@ import NotationInput from './NotationInput';
 import { Solution } from 'interfaces/data';
 import Input from './Input';
 
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.common.surface};
-  border-radius: 4px;
-  padding: 8px;
-`;
-
 interface NoteType {
   selected: boolean;
   title: string;
@@ -20,19 +14,18 @@ interface NoteType {
 const Note = (props: NoteType) => {
   const { selected, title, detail } = props;
   const inputRef = useRef<HTMLInputElement>(null);
-  const [solutions, setSolutions] = useState<Solution[]>([]);
 
   useEffect(() => {
     if (selected) inputRef.current?.focus();
   }, []);
 
   return (
-    <Wrapper>
+    <div className="rounded p-2 bg-surface">
       {selected ? <Input ref={inputRef} /> : <div>{title}</div>}
       {detail.map((d) => (
         <div>{d}</div>
       ))}
-    </Wrapper>
+    </div>
   );
 };
 Note.defaultProps = {
