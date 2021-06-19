@@ -4,20 +4,39 @@ import { useResolver } from 'src/hooks/resolver';
 import ResolverButton from './tools/ResolverButton';
 import SolutionPanel from './tools/SolutionPanel';
 
-interface InputProps {}
+interface InputProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (s: string) => void;
+}
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { value, onChange, onSubmit } = props;
   const [input, setInput] = useState<string>('');
   const triggerResolver = useResolver();
 
-  const handleSubmit = (a) => {
-    console.log(handleSubmit);
-  };
+  const handleSubmit = useCallback((e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const target = e.target as typeof e.target & {
+      input: { value: string };
+    };
+    onSubmit(target.input.value);
+  }, []);
   return (
     <form onSubmit={handleSubmit}>
-      <input ref={ref} />
-      <button type="submit" className="rounded">
-        gogo
-      </button>
+      <div className="p-2">
+        <input
+          name="input"
+          ref={ref}
+          value={value}
+          onChange={onChange}
+          className="tracking-widest"
+        />
+      </div>
+      <div className="flex justify-end">
+        <button type="submit" className="rounded">
+          gogo
+        </button>
+      </div>
     </form>
   );
 });
