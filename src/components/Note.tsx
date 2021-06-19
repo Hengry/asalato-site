@@ -13,15 +13,10 @@ interface NoteType {
 }
 const Note = (props: NoteType) => {
   const { selected, title, detail } = props;
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (selected) inputRef.current?.focus();
-  }, []);
 
   return (
     <div className="rounded p-2 bg-surface">
-      {selected ? <Input ref={inputRef} /> : <div>{title}</div>}
+      <div>{title}</div>
       {detail.map((d) => (
         <div>{d}</div>
       ))}

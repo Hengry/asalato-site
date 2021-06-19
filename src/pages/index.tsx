@@ -7,7 +7,7 @@ import GlobalStyle from 'components/GlobalStyle';
 import Note from 'components/Note';
 import Resolver from 'components/tools/Resolver';
 import DarkTheme from 'themes/darkTheme';
-import { ResolverContext } from 'src/hooks/resolver';
+import { ResolverContext, useInitResolver } from 'src/hooks/resolver';
 
 declare module '@emotion/react' {
   export interface Theme {
@@ -43,17 +43,19 @@ const Main = styled.div`
 `;
 
 const IndexPage = () => {
-  const [resolverInput, setResolverInput] = useState('');
+  // const [resolverInput, openResolver, triggerResolver] = useInitResolver();
+  const [resolverInput, triggerResolver] = useState();
+
   return (
     <ThemeProvider theme={DarkTheme}>
-      <ResolverContext.Provider value={setResolverInput}>
-        <Main>
-          <GlobalStyle />
-          <title>Home Page</title>
-          <Note title="test" selected />
-          <Resolver rythm={resolverInput} />
-        </Main>
-      </ResolverContext.Provider>
+      <Main>
+        <GlobalStyle />
+        <title>Home Page</title>
+        <Note title="test" selected />
+        <div className="absolute bottom-0 inset-x-0 p-4 flex justify-end">
+          <Resolver />
+        </div>
+      </Main>
     </ThemeProvider>
   );
 };
