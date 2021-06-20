@@ -51,7 +51,7 @@ const IndexPage = () => {
       <Main>
         <GlobalStyle />
         <title>Home Page</title>
-        <Note title="test" selected />
+        {/* <Note title="test" selected /> */}
         <div className="absolute bottom-0 inset-x-0 p-4 flex justify-end">
           <Resolver />
         </div>

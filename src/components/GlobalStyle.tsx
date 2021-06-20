@@ -17,6 +17,8 @@ export default () => {
           font-family: monospace;
           font-size: 16px;
           background-color: transparent;
+          border-bottom: 1px solid ${theme.colors.common.text};
+          padding: 2px 0px;
           z-index: 1;
           height: 20px;
           &:focus {
