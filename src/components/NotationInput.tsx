@@ -12,7 +12,7 @@ const blinking = keyframes`
 
 const StyledInput = styled.input`
   font-size: 20px;
-  font-family: monospace;
+  font-family: courier;
   font-weight: bold;
   background-color: transparent;
   width: 11px;

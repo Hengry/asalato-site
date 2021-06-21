@@ -61,6 +61,10 @@ const Resolver = (props: ResolverProps) => {
     []
   );
 
+  const handleBackspace = useCallback(() => {
+    setInput((prev) => prev.slice(0, prev.length - 1));
+  }, []);
+
   const handleSubmit = useCallback((e: React.SyntheticEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -108,6 +112,8 @@ const Resolver = (props: ResolverProps) => {
                   onClick={handleInputClick('_')}
                 >
                   _
+                  <br />
+                  (NoSound)
                 </button>
                 <button
                   type="button"
@@ -115,14 +121,19 @@ const Resolver = (props: ResolverProps) => {
                   onClick={handleInputClick('X')}
                 >
                   X
+                  <br />
+                  (Sound)
                 </button>
               </div>
               <div className="flex justify-end px-2">
                 <button
                   type="button"
                   className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+                  onClick={handleBackspace}
                 >
-                  back-space
+                  ←
+                  <br />
+                  (back)
                 </button>
               </div>
             </>

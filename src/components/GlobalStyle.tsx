@@ -10,11 +10,11 @@ export default () => {
           background: ${theme.colors.common.background};
           margin: 0px;
           color: ${theme.colors.common.text};
-          font-family: monospace;
+          font-family: 'Space Mono';
         }
         input {
           color: ${theme.colors.common.text};
-          font-family: monospace;
+          font-family: 'Space Mono';
           font-size: 16px;
           background-color: transparent;
           border-bottom: 1px solid ${theme.colors.common.text};
