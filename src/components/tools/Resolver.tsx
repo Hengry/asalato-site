@@ -22,7 +22,6 @@ const Resolver = (props: ResolverProps) => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
-    console.log('rythm', rythm);
     if (rythm) {
       setOpen(true);
       setLoading(true);
@@ -64,7 +63,6 @@ const Resolver = (props: ResolverProps) => {
 
   const handleSubmit = useCallback((e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log('sub');
     const target = e.target as typeof e.target & {
       input: { value: string };
     };
@@ -86,81 +84,75 @@ const Resolver = (props: ResolverProps) => {
           setOpen(false);
         }}
       >
-        <Dialog.Overlay className="bg-black opacity-30 fixed inset-0" />
-        <Dialog.Title className="rounded-xl absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4">
+        <Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur" />
+        <Dialog.Title className="absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4 rounded-xl">
           <Input value={input} onChange={handleChange} />
           <div className="flex justify-end">
             <button className="rounded p-1">setting</button>
           </div>
         </Dialog.Title>
-        {!openSolutionPanel && (
-          <div className="bottom-0 absolute z-10 inset-x-0 m-2">
-            <div className="flex justify-between">
-              <button
-                type="button"
-                className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-                onClick={handleInputClick('_')}
-              >
-                _
-              </button>
-              <button
-                type="button"
-                className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-                onClick={handleInputClick('X')}
-              >
-                X
-              </button>
-            </div>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-              >
-                back-space
-              </button>
-            </div>
-          </div>
-        )}
         {openSolutionPanel && (
-          <div className="rounded-xl absolute z-10 bg-surface top-24 bottom-24 inset-x-0 m-4 p-2 mb-8">
+          <div className="absolute z-8 top-24 inset-x-0 m-4 p-2">
             {solutions.map(({ text: { left, right } }) => (
               <Notation key={left + right} values={[left, right]} />
             ))}
-
-            <div className="absolute bottom-0 inset-x-0 p-2 flex justify-end">
-              <button
-                className="rounded p-1 bg-main mx-1"
-                onClick={() => setOpen(false)}
-              >
-                Deactivate
-              </button>
-              <button onClick={() => setOpen(false)}>Cancel</button>
-            </div>
           </div>
         )}
-        <div className="flex justify-between absolute bottom-0 inset-x-0 m-2">
-          <button
-            type="button"
-            className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-            onClick={() => {
-              setInput('');
-              setOpenSolutionPanel(false);
-            }}
-          >
-            Reset
-          </button>
-          <button
-            type="submit"
-            className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-          >
-            gogo
-          </button>
+        <div className="bottom-0 absolute z-10 my-2 right-1/2 transform translate-x-1/2 sm:right-0 sm:translate-x-0">
+          {!openSolutionPanel && (
+            <>
+              <div className="flex justify-between px-2">
+                <button
+                  type="button"
+                  className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+                  onClick={handleInputClick('_')}
+                >
+                  _
+                </button>
+                <button
+                  type="button"
+                  className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+                  onClick={handleInputClick('X')}
+                >
+                  X
+                </button>
+              </div>
+              <div className="flex justify-end px-2">
+                <button
+                  type="button"
+                  className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+                >
+                  back-space
+                </button>
+              </div>
+            </>
+          )}
+          <div className="inline-flex px-2">
+            <button
+              type="button"
+              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+              onClick={() => setOpen(false)}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2 opacity-80"
+              onClick={() => {
+                setInput('');
+                setRythm('');
+                setOpenSolutionPanel(false);
+              }}
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+            >
+              gogo
+            </button>
+          </div>
         </div>
       </Dialog>
     </>

@@ -50,7 +50,7 @@ const IndexPage = () => {
     <ThemeProvider theme={DarkTheme}>
       <Main>
         <GlobalStyle />
-        <title>Home Page</title>
+        <title>Asalato Resolver</title>
         {/* <Note title="test" selected /> */}
         <div className="absolute bottom-0 inset-x-0 p-4 flex justify-end">
           <Resolver />
