@@ -17,6 +17,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@fontsource/space-mono": "^4.4.5",
     "@headlessui/react": "^1.2.0",
     "clsx": "^1.1.1",
     "gatsby": "^3.6.2",
@@ -33,6 +34,6 @@
     "gatsby-plugin-root-import": "^2.0.6",
     "gatsby-plugin-typescript": "^3.7.1",
     "postcss": "^8.3.2",
-    "tailwindcss": "^2.1.4"
+    "tailwindcss": "^2.2.2"
   }
 }

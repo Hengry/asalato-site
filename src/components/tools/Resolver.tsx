@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Dialog } from '@headlessui/react';
+import styled from '@emotion/styled';
 
 import { findPath } from 'utils/rythm';
 import Input from '../Input';
@@ -8,6 +9,14 @@ import Note from 'components/Note';
 import Notation from 'components/Notation';
 import { Solution } from 'interfaces/data';
 
+const Overlay = styled(Dialog.Overlay)`
+  backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+`;
 interface ResolverProps {
   rythm?: string;
 }
@@ -88,7 +97,7 @@ const Resolver = (props: ResolverProps) => {
           setOpen(false);
         }}
       >
-        <Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur" />
+        <Overlay />
         <Dialog.Title className="absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4 rounded-xl">
           <Input value={input} onChange={handleChange} />
           <div className="flex justify-end">

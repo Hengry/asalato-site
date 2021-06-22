@@ -18,9 +18,11 @@ export default () => {
           font-size: 16px;
           background-color: transparent;
           border-bottom: 1px solid ${theme.colors.common.text};
-          padding: 2px 0px;
+          border-radius: 0px;
+          -webkit-appearance: none;
+          padding: 0px;
           z-index: 1;
-          height: 20px;
+          height: 24px;
           &:focus {
             outline: none;
           }

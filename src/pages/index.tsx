@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { Dialog } from '@headlessui/react';
+import '@fontsource/space-mono';
 
 import GlobalStyle from 'components/GlobalStyle';
 import Note from 'components/Note';
@@ -48,6 +49,10 @@ const IndexPage = () => {
 
   return (
     <ThemeProvider theme={DarkTheme}>
+      <link
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+        rel="stylesheet"
+      ></link>
       <Main>
         <GlobalStyle />
         <title>Asalato Resolver</title>

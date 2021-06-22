@@ -16,6 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <input
       name="input"
+      type="text"
       ref={ref}
       value={value}
       onChange={onChange}
