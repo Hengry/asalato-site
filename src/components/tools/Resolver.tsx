@@ -3,9 +3,7 @@ import { Dialog } from '@headlessui/react';
 import styled from '@emotion/styled';
 
 import { findPath } from 'utils/rythm';
-import Input from '../Input';
-import ToolPanel from './ToolPanel';
-import Note from 'components/Note';
+import PanelButton from 'components/PanelButton';
 import Notation from 'components/Notation';
 import SettingIcon from 'components/icons/SettingIcon';
 import { Solution } from 'interfaces/data';
@@ -124,49 +122,29 @@ const Resolver = (props: ResolverProps) => {
           {!openSolutionPanel && (
             <>
               <div className="flex justify-between px-2">
-                <button
-                  type="button"
-                  className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-                  onClick={handleInputClick('_')}
-                >
+                <PanelButton onClick={handleInputClick('_')}>
                   _
                   <br />
                   (NoSound)
-                </button>
-                <button
-                  type="button"
-                  className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-                  onClick={handleInputClick('X')}
-                >
+                </PanelButton>
+                <PanelButton onClick={handleInputClick('X')}>
                   X
                   <br />
                   (Sound)
-                </button>
+                </PanelButton>
               </div>
               <div className="flex justify-end px-2">
-                <button
-                  type="button"
-                  className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-                  onClick={handleBackspace}
-                >
+                <PanelButton onClick={handleBackspace}>
                   ←
                   <br />
                   (back)
-                </button>
+                </PanelButton>
               </div>
             </>
           )}
           <div className="inline-flex px-2">
-            <button
-              type="button"
-              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
-              onClick={() => setOpen(false)}
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+            <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
+            <PanelButton
               onClick={() => {
                 setInput('');
                 setRythm('');
@@ -174,13 +152,10 @@ const Resolver = (props: ResolverProps) => {
               }}
             >
               Reset
-            </button>
-            <button
-              type="submit"
-              className="rounded-3xl inline-block bg-gray-700 h-24 w-24 m-2"
-            >
+            </PanelButton>
+            <PanelButton type="submit" color="main">
               gogo
-            </button>
+            </PanelButton>
           </div>
         </div>
       </Dialog>

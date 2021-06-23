@@ -11,11 +11,14 @@ export type Beat = {
   mark: Mark;
   position: Position;
 };
+type startDirection = 'forward' | 'backward' | 'twoWay';
+type cycle = 'asymmetry' | 'symmetry';
+export type Tag = 'airTurn' | 'click' | startDirection | cycle;
 export type Solution = {
   path: Array<Beat>;
   text: {
     left: string;
     right: string;
   };
-  symmetry: boolean;
+  tags: Tag[];
 };

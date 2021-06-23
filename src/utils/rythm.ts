@@ -1,19 +1,10 @@
 import cloneDeep from 'lodash/cloneDeep';
 import range from 'lodash/range';
 import get from 'lodash/get';
-import { Position, Symbol, Solution, Mark, Beat } from 'interfaces/data';
+import { Position, Symbol, Solution, Mark, Beat, Tag } from 'interfaces/data';
 
-type TableOptions = {
-  withAirTurn?: boolean;
-  withClick?: boolean;
-};
-export const getPositionTable = ({
-  withAirTurn,
-  withClick,
-}: TableOptions): Symbol[][] => {
-  const positionTable: Symbol[][] = new Array(withAirTurn ? 11 : 8)
-    .fill(undefined)
-    .map(() => []);
+export const getPositionTable = (): Symbol[][] => {
+  const positionTable: Symbol[][] = new Array(11).fill(undefined).map(() => []);
   positionTable[0][1] = '_';
   positionTable[1][0] = '_';
   positionTable[1][4] = 'S';
@@ -24,15 +15,14 @@ export const getPositionTable = ({
   positionTable[5][4] = '_';
   positionTable[5][6] = 'G';
   positionTable[6][3] = 'S';
-  positionTable[6][7] = withClick ? 'C' : '_';
+  positionTable[6][7] = 'C';
   positionTable[7][6] = '_';
 
-  if (withAirTurn) {
-    positionTable[2][8] = 'A';
-    positionTable[8][9] = '_';
-    positionTable[9][10] = '_';
-    positionTable[10][2] = '_';
-  }
+  // AirTurn
+  positionTable[2][8] = 'A';
+  positionTable[8][9] = '_';
+  positionTable[9][10] = '_';
+  positionTable[10][2] = '_';
   return positionTable;
 };
 
@@ -237,21 +227,19 @@ const candidates2Solutions = (
         left: revisedPath.map(({ mark }) => mark.left).join(''),
         right: revisedPath.map(({ mark }) => mark.right).join(''),
       },
-      symmetry,
+      tags: [symmetry ? 'symmetry' : 'asymmetry'],
     };
   });
 
-const findCandidateseEndAsStart = (
-  candidates: Array<Beat>[],
-  { asymmetryCycle }: { asymmetryCycle?: boolean }
-): Array<Beat>[] =>
+const filterCyclic = (candidates: Array<Beat>[]): Array<Beat>[] =>
   candidates.filter((candidate) => {
     const start = candidate[0]?.position;
     const end = candidate[candidate.length - 1]?.position;
-    return asymmetryCycle
-      ? (start.left === end.right && start.right === end.left) ||
-          (start.left === end.left && start.right === end.right)
-      : start.left === end.left && start.right === end.right;
+    return (
+      (start.left === end.right && start.right === end.left) ||
+      (start.left === end.left && start.right === end.right)
+    );
+    // sym cycle: start.left === end.left && start.right === end.right
   });
 
 const checkRepeat = (solution: Solution, filtered: Solution[]): boolean => {
@@ -283,20 +271,10 @@ type Options = {
   preferGrab?: boolean;
 };
 
-export const findPath = (
-  rythm: string = '',
-  options: Options = {}
-): Solution[] => {
-  const {
-    withAirTurn = false,
-    withClick = true,
-    onlyStartInForward = false,
-    asymmetryCycle = false,
-    preferGrab = false,
-  } = options;
-
-  const startPositions = onlyStartInForward ? [2, 6] : [2, 6, 0, 4];
-  const positionTable = getPositionTable({ withAirTurn, withClick });
+const resolveTechniques = (rythm: string) => {
+  // [2, 6]: start in forward
+  const startPositions = [2, 6, 0, 4];
+  const positionTable = getPositionTable();
 
   let candidates: Array<Beat[]> = [];
   startPositions.forEach((left) => {
@@ -342,10 +320,48 @@ export const findPath = (
     candidates = nextCandidates;
   }
 
-  const finalCandidates = findCandidateseEndAsStart(candidates, {
-    asymmetryCycle,
+  return candidates;
+};
+
+const way = (p: number) => {
+  switch (p) {
+    case 2:
+    case 6:
+      return 'f';
+    case 0:
+    case 4:
+    default:
+      return 'b';
+  }
+};
+const injectTags = (solutions: Solution[]): Solution[] =>
+  solutions.map((solution) => {
+    const { path, text, tags } = solution;
+    const newTags: Tag[] = [...tags];
+    {
+      const { left, right } = text;
+      if (left.includes('C') || right.includes('C')) newTags.push('click');
+      if (left.includes('A') || right.includes('A')) newTags.push('airTurn');
+    }
+    {
+      const left = way(path[0].position.left);
+      const right = way(path[0].position.right);
+      if (left !== right) tags.push('twoWay');
+      else if (left === 'f') tags.push('forward');
+      else if (left === 'b') tags.push('backward');
+    }
+    return solution;
   });
+
+export const findPath = (
+  rythm: string = '',
+  options: Options = {}
+): Solution[] => {
+  const { preferGrab = false } = options;
+  const candidates = resolveTechniques(rythm);
+  const finalCandidates = filterCyclic(candidates);
   const solutions = candidates2Solutions(finalCandidates, preferGrab);
   const filtered = filterRedundantSolutions(solutions);
-  return filtered;
+  const injected = injectTags(filtered);
+  return injected;
 };
