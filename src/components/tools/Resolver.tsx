@@ -7,6 +7,7 @@ import Input from '../Input';
 import ToolPanel from './ToolPanel';
 import Note from 'components/Note';
 import Notation from 'components/Notation';
+import SettingIcon from 'components/icons/SettingIcon';
 import { Solution } from 'interfaces/data';
 
 const Overlay = styled(Dialog.Overlay)`
@@ -85,7 +86,7 @@ const Resolver = (props: ResolverProps) => {
   return (
     <>
       <div
-        className="rounded-full w-16 h-16 bg-main flex items-center justify-center"
+        className="rounded-full w-16 h-16 bg-gray-700 flex items-center justify-center"
         onClick={handleClicked}
       />
       <Dialog
@@ -99,9 +100,17 @@ const Resolver = (props: ResolverProps) => {
       >
         <Overlay />
         <Dialog.Title className="absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4 rounded-xl">
-          <Input value={input} onChange={handleChange} />
+          <input
+            name="input"
+            type="text"
+            value={input}
+            onChange={handleChange}
+            className="tracking-widest"
+          />
           <div className="flex justify-end">
-            <button className="rounded p-1">setting</button>
+            <button className="rounded p-1">
+              <SettingIcon />
+            </button>
           </div>
         </Dialog.Title>
         {openSolutionPanel && (
@@ -157,7 +166,7 @@ const Resolver = (props: ResolverProps) => {
             </button>
             <button
               type="button"
-              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2 opacity-80"
+              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
               onClick={() => {
                 setInput('');
                 setRythm('');
@@ -168,7 +177,7 @@ const Resolver = (props: ResolverProps) => {
             </button>
             <button
               type="submit"
-              className="rounded-3xl inline-block bg-surface h-24 w-24 m-2"
+              className="rounded-3xl inline-block bg-gray-700 h-24 w-24 m-2"
             >
               gogo
             </button>
