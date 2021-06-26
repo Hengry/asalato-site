@@ -8,6 +8,8 @@ import Notation from 'components/Notation';
 import SettingIcon from 'components/icons/SettingIcon';
 import { Solution } from 'interfaces/data';
 
+import ResolverWorker from 'utils/resolver.worker';
+
 const Overlay = styled(Dialog.Overlay)`
   backdrop-filter: blur(8px);
   position: fixed;
@@ -33,10 +35,16 @@ const Resolver = (props: ResolverProps) => {
     if (rythm) {
       setOpen(true);
       setLoading(true);
-      const path = findPath(rythm);
-      setSolutions(path);
-      setOpenSolutionPanel(true);
-      setLoading(false);
+      setOpenSolutionPanel(false);
+
+      const worker = new ResolverWorker();
+      worker.onmessage = (msg: MessageEvent) => {
+        setLoading(false);
+        setSolutions(msg.data);
+        setOpenSolutionPanel(true);
+      };
+
+      worker.postMessage(rythm);
     }
   }, [rythm]);
 
@@ -111,6 +119,11 @@ const Resolver = (props: ResolverProps) => {
             </button>
           </div>
         </Dialog.Title>
+        {loading && (
+          <div className="absolute z-8 top-24 inset-x-0 m-4 p-2">
+            I'm Calculating...
+          </div>
+        )}
         {openSolutionPanel && (
           <div className="absolute z-8 top-24 inset-x-0 m-4 p-2">
             {solutions.map(({ text: { left, right } }) => (
