@@ -37,14 +37,21 @@ const Resolver = (props: ResolverProps) => {
       setLoading(true);
       setOpenSolutionPanel(false);
 
-      const worker = new ResolverWorker();
-      worker.onmessage = (msg: MessageEvent) => {
-        setLoading(false);
-        setSolutions(msg.data);
-        setOpenSolutionPanel(true);
-      };
+      if (window.Worker) {
+        const worker = new ResolverWorker();
+        worker.onmessage = (msg: MessageEvent) => {
+          setLoading(false);
+          setSolutions(msg.data);
+          setOpenSolutionPanel(true);
+        };
 
-      worker.postMessage(rythm);
+        worker.postMessage(rythm);
+      } else {
+        const result = findPath(rythm);
+        setLoading(false);
+        setSolutions(result);
+        setOpenSolutionPanel(true);
+      }
     }
   }, [rythm]);
 
