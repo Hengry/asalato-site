@@ -15,7 +15,7 @@ const Tag = (props: TagProps) => {
         active ? 'bg-gray-700' : 'bg-surface'
       } ${
         active ? '' : 'text-gray-500'
-      } w-7 h-7 inline-flex justify-center items-center m-0.5 text-sm`}
+      } w-8 h-8 inline-flex justify-center items-center m-0.5 text-sm`}
       onClick={onClick}
     >
       {display}

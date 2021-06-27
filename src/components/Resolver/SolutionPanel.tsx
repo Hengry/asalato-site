@@ -61,7 +61,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
   }, [solutions, filters]);
 
   return (
-    <div className="absolute z-8 top-20 inset-x-0 m-4">
+    <div className="absolute z-8 top-20 bottom-24 inset-x-0 m-4 overflow-auto">
       <div className="flex my-4 pb-0.5 border-b items-end">
         <div
           className="mr-1 mb-0.5"
