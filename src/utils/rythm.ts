@@ -348,14 +348,14 @@ const way = (p: number) => {
 };
 const injectTags = (solutions: Solution[]): Solution[] =>
   solutions.map((solution) => {
-    const { path, text, tags } = solution;
+    const { text, tags } = solution;
     const newTags: Tag[] = [...tags];
     {
       const { left, right } = text;
       if (left.includes('C') || right.includes('C')) newTags.push('click');
       if (left.includes('A') || right.includes('A')) newTags.push('airTurn');
     }
-    return solution;
+    return { ...solution, tags: newTags };
   });
 
 export const findPath = (
