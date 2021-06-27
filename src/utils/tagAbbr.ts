@@ -1,7 +1,7 @@
 import { Tag } from 'interfaces/data';
 
 // change to icons in the future
-export default (tag: Tag) => {
+export default (tag: string) => {
   switch (tag) {
     case 'forward':
       return 'f';

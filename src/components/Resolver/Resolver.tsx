@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 
 import { findPath } from 'utils/rythm';
 import PanelButton from 'components/PanelButton';
-import Notation from 'components/Notation';
 import SettingIcon from 'components/icons/SettingIcon';
-import Tag from 'components/Tag';
 import { Solution } from 'interfaces/data';
+
+import SolutionPanel from './SolutionPanel';
 
 import ResolverWorker from 'utils/resolver.worker';
 
@@ -132,20 +132,7 @@ const Resolver = (props: ResolverProps) => {
             I'm Calculating...
           </div>
         )}
-        {openSolutionPanel && (
-          <div className="absolute z-8 top-24 inset-x-0 m-4 p-2">
-            {solutions.map(({ text: { left, right }, tags }) => (
-              <React.Fragment key={left + right}>
-                <div className="flex">
-                  {tags.map((tag) => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}
-                </div>
-                <Notation values={[left, right]} />
-              </React.Fragment>
-            ))}
-          </div>
-        )}
+        {openSolutionPanel && <SolutionPanel solutions={solutions} />}
         <div className="bottom-0 absolute z-10 my-2 right-1/2 transform translate-x-1/2 sm:right-0 sm:translate-x-0">
           {!openSolutionPanel && (
             <>

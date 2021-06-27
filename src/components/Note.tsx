@@ -4,7 +4,6 @@ import { Dialog } from '@headlessui/react';
 
 import NotationInput from './NotationInput';
 import { Solution } from 'interfaces/data';
-import Input from './Input';
 
 interface NoteType {
   selected: boolean;

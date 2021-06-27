@@ -6,9 +6,8 @@ import '@fontsource/space-mono';
 
 import GlobalStyle from 'components/GlobalStyle';
 import Note from 'components/Note';
-import Resolver from 'components/tools/Resolver';
+import Resolver from 'components/Resolver';
 import DarkTheme from 'themes/darkTheme';
-import { ResolverContext, useInitResolver } from 'src/hooks/resolver';
 
 declare module '@emotion/react' {
   export interface Theme {
