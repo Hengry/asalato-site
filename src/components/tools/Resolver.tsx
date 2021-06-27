@@ -6,6 +6,7 @@ import { findPath } from 'utils/rythm';
 import PanelButton from 'components/PanelButton';
 import Notation from 'components/Notation';
 import SettingIcon from 'components/icons/SettingIcon';
+import Tag from 'components/Tag';
 import { Solution } from 'interfaces/data';
 
 import ResolverWorker from 'utils/resolver.worker';
@@ -133,8 +134,15 @@ const Resolver = (props: ResolverProps) => {
         )}
         {openSolutionPanel && (
           <div className="absolute z-8 top-24 inset-x-0 m-4 p-2">
-            {solutions.map(({ text: { left, right } }) => (
-              <Notation key={left + right} values={[left, right]} />
+            {solutions.map(({ text: { left, right }, tags }) => (
+              <React.Fragment key={left + right}>
+                <div className="flex">
+                  {tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                </div>
+                <Notation values={[left, right]} />
+              </React.Fragment>
             ))}
           </div>
         )}

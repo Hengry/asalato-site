@@ -11,9 +11,9 @@ export type Beat = {
   mark: Mark;
   position: Position;
 };
-type startDirection = 'forward' | 'backward' | 'twoWay';
-type cycle = 'asymmetry' | 'symmetry';
-export type Tag = 'airTurn' | 'click' | startDirection | cycle;
+export type StartDirection = 'forward' | 'backward' | 'twoWay';
+export type Cycle = 'antisymmetry' | 'symmetry';
+export type Tag = 'airTurn' | 'click' | StartDirection | Cycle;
 export type Solution = {
   path: Array<Beat>;
   text: {

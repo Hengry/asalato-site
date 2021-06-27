@@ -1,7 +1,15 @@
 import cloneDeep from 'lodash/cloneDeep';
 import range from 'lodash/range';
 import get from 'lodash/get';
-import { Position, Symbol, Solution, Mark, Beat, Tag } from 'interfaces/data';
+import {
+  Position,
+  Symbol,
+  Solution,
+  Mark,
+  Beat,
+  Tag,
+  StartDirection,
+} from 'interfaces/data';
 
 export const getPositionTable = (): Symbol[][] => {
   const positionTable: Symbol[][] = new Array(11).fill(undefined).map(() => []);
@@ -209,6 +217,13 @@ const preferF = (candidate: Array<Beat>, symmetry: boolean): Array<Beat> => {
   return revised.slice(0, candidate.length);
 };
 
+const getDirection = (position: Position): StartDirection => {
+  const left = way(position.left);
+  const right = way(position.right);
+  if (left !== right) return 'twoWay';
+  else if (left === 'f') return 'forward';
+  else return 'backward';
+};
 const candidates2Solutions = (
   candidates: Array<Beat>[],
   preferGrab: boolean
@@ -227,7 +242,7 @@ const candidates2Solutions = (
         left: revisedPath.map(({ mark }) => mark.left).join(''),
         right: revisedPath.map(({ mark }) => mark.right).join(''),
       },
-      tags: [symmetry ? 'symmetry' : 'asymmetry'],
+      tags: [symmetry ? 'symmetry' : 'antisymmetry', getDirection(start)],
     };
   });
 
@@ -263,11 +278,6 @@ const filterRedundantSolutions = (solutions: Solution[]): Solution[] => {
 };
 
 type Options = {
-  withAirTurn?: boolean;
-  withClick?: boolean;
-  onlyStartInForward?: boolean;
-  simplify?: boolean;
-  asymmetryCycle?: boolean;
   preferGrab?: boolean;
 };
 
@@ -276,6 +286,7 @@ const resolveTechniques = (rythm: string) => {
   const startPositions = [2, 6, 0, 4];
   const positionTable = getPositionTable();
 
+  // initial
   let candidates: Array<Beat[]> = [];
   startPositions.forEach((left) => {
     startPositions.forEach((right) => {
@@ -294,6 +305,7 @@ const resolveTechniques = (rythm: string) => {
     });
   });
 
+  // BFS
   for (let i = 0; i !== rythm.length; i += 1) {
     const beat = rythm[i];
     const nextCandidates: Array<Beat[]> = [];
@@ -342,13 +354,6 @@ const injectTags = (solutions: Solution[]): Solution[] =>
       const { left, right } = text;
       if (left.includes('C') || right.includes('C')) newTags.push('click');
       if (left.includes('A') || right.includes('A')) newTags.push('airTurn');
-    }
-    {
-      const left = way(path[0].position.left);
-      const right = way(path[0].position.right);
-      if (left !== right) tags.push('twoWay');
-      else if (left === 'f') tags.push('forward');
-      else if (left === 'b') tags.push('backward');
     }
     return solution;
   });
