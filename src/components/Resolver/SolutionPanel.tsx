@@ -3,6 +3,7 @@ import Notation from 'components/Notation';
 import Tag from 'components/Tag';
 import FilterIcon from 'components/icons/FilterIcon';
 import { Solution } from 'interfaces/data';
+import { useCallback } from 'react';
 
 const recommandSetting = {
   begineer: {
@@ -22,6 +23,12 @@ const filterOptions: { [k: string]: string[] } = {
   cycle: ['antisymmetry', 'symmetry'],
   technique: ['airTurn', 'click'],
 };
+const options: string[] = Object.keys(filterOptions).reduce<string[]>(
+  (accu, category) => {
+    return accu.concat(filterOptions[category]);
+  },
+  []
+);
 
 interface SolutionTableProps {
   solutions: Solution[];
@@ -29,22 +36,49 @@ interface SolutionTableProps {
 
 const SolutionPanel = (props: SolutionTableProps) => {
   const { solutions } = props;
-  const [filters, setFilters] = useState<string[]>([]);
+  const [filters, setFilters] = useState<string[]>(options);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
 
+  const handleFilterTagClicked = useCallback(
+    (option) => () => {
+      setFilters((prev) => {
+        if (prev.includes(option)) {
+          const index = prev.findIndex((e) => e === option);
+          const newArray = [...prev];
+          newArray.splice(index, 1);
+          return newArray;
+        }
+        return prev.concat(option);
+      });
+    },
+    []
+  );
+
+  const filteredSolutions = useMemo(() => {
+    return solutions.filter(({ tags }) =>
+      tags.every((tag) => filters.includes(tag))
+    );
+  }, [solutions, filters]);
+
   return (
-    <div className="absolute z-8 top-20 inset-x-0 m-4 p-2">
-      <div className="flex mb-2 pb-0.5 border-b items-end">
+    <div className="absolute z-8 top-20 inset-x-0 m-4">
+      <div className="flex my-4 pb-0.5 border-b items-end">
         <div
-          className="mr-1 mb-1"
-          onClick={() => {
-            setOpenFilter((prev) => !prev);
-          }}
+          className="mr-1 mb-0.5"
+          // onClick={() => {
+          //   setOpenFilter((prev) => !prev);
+          // }}
         >
           <FilterIcon />
         </div>
-        {filters.map((option) => (
-          <Tag key={option}>{option}</Tag>
+        {options.map((option) => (
+          <Tag
+            key={option}
+            active={filters.includes(option)}
+            onClick={handleFilterTagClicked(option)}
+          >
+            {option}
+          </Tag>
         ))}
       </div>
       {openFilter && (
@@ -53,19 +87,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
             <div key={category} className="flex flex-col space-y-2">
               <div>{category}</div>
               {filterOptions[category].map((option) => (
-                <div
-                  key={option}
-                  onClick={() => {
-                    setFilters((prev) => {
-                      if (prev.includes(option)) {
-                        const index = filters.findIndex((e) => e === option);
-                        prev.splice(index, 1);
-                        return [...prev];
-                      }
-                      return prev.concat(option);
-                    });
-                  }}
-                >
+                <div key={option}>
                   <Tag>{option}</Tag>
                   <div className="ml-2 inline">{option}</div>
                 </div>
@@ -74,7 +96,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
           ))}
         </div>
       )}
-      {solutions.map(({ text: { left, right }, tags }) => (
+      {filteredSolutions.map(({ text: { left, right }, tags }) => (
         <React.Fragment key={left + right}>
           <div className="flex">
             {tags.map((tag) => (

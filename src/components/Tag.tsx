@@ -4,15 +4,19 @@ import tagAbbr from 'utils/tagAbbr';
 interface TagProps {
   active: boolean;
   children: React.ReactNode;
+  onClick?: () => void;
 }
 const Tag = (props: TagProps) => {
-  const { active, children } = props;
+  const { active, children, onClick } = props;
   const display = typeof children === 'string' ? tagAbbr(children) : children;
   return (
     <div
       className={`capitalize rounded-full ${
         active ? 'bg-gray-700' : 'bg-surface'
+      } ${
+        active ? '' : 'text-gray-500'
       } w-7 h-7 inline-flex justify-center items-center m-0.5 text-sm`}
+      onClick={onClick}
     >
       {display}
     </div>
