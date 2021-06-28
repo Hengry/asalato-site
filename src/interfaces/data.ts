@@ -20,5 +20,6 @@ export type Solution = {
     left: string;
     right: string;
   };
+  startPosition: Position;
   tags: Tag[];
 };

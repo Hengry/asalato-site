@@ -140,7 +140,7 @@ const reverse = (candidate: Array<Beat>) =>
 const preferG = (candidate: Array<Beat>, symmetry: boolean): Array<Beat> => {
   const base = symmetry
     ? cloneDeep(candidate.concat(candidate))
-    : cloneDeep(candidate.concat(reverse(candidate)).concat(candidate));
+    : cloneDeep(candidate.concat(reverse(candidate)).concat(candidate)); // incase of one side is all heli
 
   const revised = base.map(({ mark: { left, right }, ...rest }, i) => {
     let newLeft = left;
@@ -217,9 +217,21 @@ const preferF = (candidate: Array<Beat>, symmetry: boolean): Array<Beat> => {
   return revised.slice(0, candidate.length);
 };
 
+const way = (p: number) => {
+  switch (p) {
+    case 2:
+    case 6:
+      return 'f';
+    case 0:
+    case 4:
+    default:
+      return 'b';
+  }
+};
 const getDirection = (position: Position): StartDirection => {
   const left = way(position.left);
   const right = way(position.right);
+
   if (left !== right) return 'twoWay';
   else if (left === 'f') return 'forward';
   else return 'backward';
@@ -242,7 +254,8 @@ const candidates2Solutions = (
         left: revisedPath.map(({ mark }) => mark.left).join(''),
         right: revisedPath.map(({ mark }) => mark.right).join(''),
       },
-      tags: [symmetry ? 'symmetry' : 'antisymmetry', getDirection(start)],
+      startPosition: start,
+      tags: [getDirection(start), symmetry ? 'symmetry' : 'antisymmetry'],
     };
   });
 
@@ -335,17 +348,6 @@ const resolveTechniques = (rythm: string) => {
   return candidates;
 };
 
-const way = (p: number) => {
-  switch (p) {
-    case 2:
-    case 6:
-      return 'f';
-    case 0:
-    case 4:
-    default:
-      return 'b';
-  }
-};
 const injectTags = (solutions: Solution[]): Solution[] =>
   solutions.map((solution) => {
     const { text, tags } = solution;
