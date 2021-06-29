@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Notation from 'components/Notation';
 import Tag from 'components/Tag';
-import FilterIcon from 'components/icons/FilterIcon';
+import SearchIcon from 'components/icons/SearchIcon';
 import { Solution } from 'interfaces/data';
 import { useCallback } from 'react';
 
@@ -61,10 +61,10 @@ const SolutionPanel = (props: SolutionTableProps) => {
   }, [solutions, filters]);
 
   return (
-    <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto">
-      <div className="flex my-4 pb-0.5 border-b items-end">
-        <div className="mr-1 mb-0.5">
-          <FilterIcon />
+    <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto text-center">
+      <div className="inline-flex my-4 pb-0.5 items-center relative">
+        <div className="mr-2 mt-1.5 text-gray-500 absolute right-full">
+          <SearchIcon />
         </div>
         {options.map((option) => (
           <Tag
@@ -91,12 +91,14 @@ const SolutionPanel = (props: SolutionTableProps) => {
           ))}
         </div>
       )}
-      {filteredSolutions.map(({ text: { left, right }, tags }) => (
+      {filteredSolutions.map(({ text: { left, right }, tags }, index) => (
         <React.Fragment key={left + right}>
-          <div className="flex mt-4">
+          <div className="flex mt-4 items-center">
+            {/* {index + 1}. */}
             {tags.map((tag) => (
               <Tag key={tag}>{tag}</Tag>
             ))}
+            <div className="ml-auto">{index + 1}</div>
           </div>
           <Notation values={[left, right]} />
         </React.Fragment>
