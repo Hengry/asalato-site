@@ -61,47 +61,50 @@ const SolutionPanel = (props: SolutionTableProps) => {
   }, [solutions, filters]);
 
   return (
-    <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto">
-      <div className="flex my-4 pb-0.5 border-b items-end">
-        <div className="mr-1 mb-0.5">
-          <FilterIcon />
-        </div>
-        {options.map((option) => (
-          <Tag
-            key={option}
-            active={filters.includes(option)}
-            onClick={handleFilterTagClicked(option)}
-          >
-            {option}
-          </Tag>
-        ))}
-      </div>
-      {openFilter && (
-        <div className="flex flex-col space-y-4">
-          {Object.keys(filterOptions).map((category) => (
-            <div key={category} className="flex flex-col space-y-2">
-              <div>{category}</div>
-              {filterOptions[category].map((option) => (
-                <div key={option}>
-                  <Tag>{option}</Tag>
-                  <div className="ml-2 inline">{option}</div>
-                </div>
-              ))}
-            </div>
+    <>
+      <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto">
+        <div className="flex my-4 pb-0.5 border-b items-end">
+          <div className="mr-1 mb-0.5">
+            <FilterIcon />
+          </div>
+          {options.map((option) => (
+            <Tag
+              key={option}
+              active={filters.includes(option)}
+              onClick={handleFilterTagClicked(option)}
+            >
+              {option}
+            </Tag>
           ))}
         </div>
-      )}
-      {filteredSolutions.map(({ text: { left, right }, tags }) => (
-        <React.Fragment key={left + right}>
-          <div className="flex mt-4">
-            {tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
+        {openFilter && (
+          <div className="flex flex-col space-y-4">
+            {Object.keys(filterOptions).map((category) => (
+              <div key={category} className="flex flex-col space-y-2">
+                <div>{category}</div>
+                {filterOptions[category].map((option) => (
+                  <div key={option}>
+                    <Tag>{option}</Tag>
+                    <div className="ml-2 inline">{option}</div>
+                  </div>
+                ))}
+              </div>
             ))}
           </div>
-          <Notation values={[left, right]} />
-        </React.Fragment>
-      ))}
-    </div>
+        )}
+        {filteredSolutions.map(({ text: { left, right }, tags }) => (
+          <React.Fragment key={left + right}>
+            <div className="flex mt-4">
+              {tags.map((tag) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </div>
+            <Notation values={[left, right]} />
+          </React.Fragment>
+        ))}
+      </div>
+      {/* <div className="absolute bottom-32 inset-x-0 h-4 bg-gradient-to-t from-background" /> */}
+    </>
   );
 };
 
