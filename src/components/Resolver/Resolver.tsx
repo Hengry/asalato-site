@@ -111,12 +111,11 @@ const Resolver = (props: ResolverProps) => {
             type="text"
             value={input}
             onChange={handleChange}
-            className="tracking-widest"
+            className="tracking-widest w-full"
           />
-          <div className="flex justify-end">
-            <button className="rounded p-1">
-              <SettingIcon />
-            </button>
+          <div className="flex justify-end py-2">
+            Prefer
+            <button className="rounded-lg ml-2 px-2 border">Flip Flop</button>
           </div>
         </Dialog.Title>
         {loading && (
