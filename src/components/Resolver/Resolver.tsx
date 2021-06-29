@@ -157,7 +157,7 @@ const Resolver = (props: ResolverProps) => {
               </div>
             </>
           )}
-          <div className="inline-flex px-2">
+          <div className="inline-flex px-2 border-t border-surface">
             <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
             <PanelButton
               onClick={() => {
