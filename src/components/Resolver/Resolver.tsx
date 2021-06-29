@@ -112,7 +112,7 @@ const Resolver = (props: ResolverProps) => {
           setOpen(false);
         }}
       >
-        <Overlay />
+        <Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur" />
         <Dialog.Title className="absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4 rounded-xl">
           <input
             name="input"
