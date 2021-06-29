@@ -11,14 +11,6 @@ import SolutionPanel from './SolutionPanel';
 
 import ResolverWorker from 'utils/resolver.worker';
 
-const Overlay = styled(Dialog.Overlay)`
-  backdrop-filter: blur(8px);
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-`;
 interface ResolverProps {
   rythm?: string;
 }
@@ -133,31 +125,27 @@ const Resolver = (props: ResolverProps) => {
           </div>
         )}
         {openSolutionPanel && <SolutionPanel solutions={solutions} />}
-        <div className="bottom-0 absolute z-10 my-2 right-1/2 transform translate-x-1/2 sm:right-0 sm:translate-x-0">
+        <div className="bottom-0 absolute z-10 inset-x-0 flex flex-col items-center">
           {!openSolutionPanel && (
-            <>
-              <div className="flex justify-between px-2">
-                <PanelButton onClick={handleInputClick('_')}>
-                  _
-                  <br />
-                  (NoSound)
-                </PanelButton>
-                <PanelButton onClick={handleInputClick('X')}>
-                  X
-                  <br />
-                  (Sound)
-                </PanelButton>
-              </div>
-              <div className="flex justify-end px-2">
-                <PanelButton onClick={handleBackspace}>
-                  ←
-                  <br />
-                  (back)
-                </PanelButton>
-              </div>
-            </>
+            <div className="flex justify-between p-2">
+              <PanelButton onClick={handleBackspace}>
+                ←
+                <br />
+                (back)
+              </PanelButton>
+              <PanelButton onClick={handleInputClick('_')}>
+                _
+                <br />
+                (NoSound)
+              </PanelButton>
+              <PanelButton onClick={handleInputClick('X')}>
+                X
+                <br />
+                (Sound)
+              </PanelButton>
+            </div>
           )}
-          <div className="inline-flex px-2 border-t border-surface">
+          <div className="flex justify-center p-2 border-t border-surface">
             <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
             <PanelButton
               onClick={() => {

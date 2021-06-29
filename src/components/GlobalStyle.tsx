@@ -29,6 +29,7 @@ export default () => {
         }
         button:focus {
           outline: none;
+          user-select: none;
         }
       `}
     />
