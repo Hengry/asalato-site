@@ -125,7 +125,7 @@ const Resolver = (props: ResolverProps) => {
           </div>
         )}
         {openSolutionPanel && <SolutionPanel solutions={solutions} />}
-        <div className="bottom-0 absolute z-10 inset-x-0 flex flex-col items-center">
+        <div className="bottom-0 absolute px-4 z-10 inset-x-0 flex flex-col items-center">
           {!openSolutionPanel && (
             <div className="flex justify-between p-2">
               <PanelButton onClick={handleBackspace}>
@@ -145,7 +145,7 @@ const Resolver = (props: ResolverProps) => {
               </PanelButton>
             </div>
           )}
-          <div className="flex justify-center p-2 border-t border-surface">
+          <div className="flex justify-center w-full p-2 border-t border-surface">
             <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
             <PanelButton
               onClick={() => {
