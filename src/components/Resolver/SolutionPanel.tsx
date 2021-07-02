@@ -62,7 +62,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
 
   return (
     <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto text-center">
-      <div className="inline-flex my-4 pb-0.5 items-center relative">
+      <div className="inline-flex mt-4 pb-0.5 items-center relative">
         <div className="mr-2 mt-1.5 text-gray-500 absolute right-full">
           <SearchIcon />
         </div>
@@ -91,9 +91,12 @@ const SolutionPanel = (props: SolutionTableProps) => {
           ))}
         </div>
       )}
+      <div className="flex px-2 mb-2 text-gray-500">
+        {filteredSolutions.length} results
+      </div>
       {filteredSolutions.map(({ text: { left, right }, tags }, index) => (
-        <div key={left + right} className="table">
-          <div className="flex mt-4 items-center">
+        <div key={left + right} className="table py-2">
+          <div className="flex items-center">
             {tags.map((tag) => (
               <Tag key={tag}>{tag}</Tag>
             ))}
