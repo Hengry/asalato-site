@@ -92,16 +92,15 @@ const SolutionPanel = (props: SolutionTableProps) => {
         </div>
       )}
       {filteredSolutions.map(({ text: { left, right }, tags }, index) => (
-        <React.Fragment key={left + right}>
+        <div key={left + right} className="table">
           <div className="flex mt-4 items-center">
-            {/* {index + 1}. */}
             {tags.map((tag) => (
               <Tag key={tag}>{tag}</Tag>
             ))}
             <div className="ml-auto">{index + 1}</div>
           </div>
           <Notation values={[left, right]} />
-        </React.Fragment>
+        </div>
       ))}
     </div>
   );

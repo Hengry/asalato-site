@@ -1,9 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from '@emotion/styled';
-import { Dialog } from '@headlessui/react';
-
-import NotationInput from './NotationInput';
-import { Solution } from 'interfaces/data';
 
 interface NoteType {
   selected: boolean;

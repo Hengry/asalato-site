@@ -1,108 +1,55 @@
-import React from 'react';
-import { ReactNode, Children, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import chunk from 'lodash/chunk';
-import range from 'lodash/range';
-import clsx from 'clsx';
 
-import styled from '@emotion/styled';
-
-const Wrapper = styled.div`
-  letter-spacing: 4px;
-  position: relative;
-  padding: 0px 0px;
-  display: flex;
-  flex-wrap: wrap;
-  & > * {
-    margin: 2px -1px;
+const guessMeter = (length: number) => {
+  const beats = length / 2;
+  switch (true) {
+    case beats % 4 === 0:
+      return 4;
+    case beats % 3 === 0:
+      return 3;
+    case beats % 2 === 0:
+      return 2;
+    default:
+      return beats;
   }
-`;
-
-const SideLine = styled.div`
-  left: 4px;
-  height: 100%;
-  display: inline;
-  position: absolute;
-  border-left: 2px solid ${({ theme }) => theme.colors.common.text};
-  border-right: 2px solid ${({ theme }) => theme.colors.common.text};
-  left: -3px;
-  width: 6px;
-  background-color: ${({ theme }) => theme.colors.primary.dark};
-`;
-
-const Beat = styled.div`
-  padding: 4px 4px;
-  display: inline;
-`;
-
-const Bar = styled.div`
-  padding: 0px 8px;
-  display: inline-flex;
-  border-left: 2px solid ${({ theme }) => theme.colors.common.text};
-  border-right: 2px solid ${({ theme }) => theme.colors.common.text};
-  &.multi-line {
-    display: flex;
-    flex-direction: column;
-  }
-  &.none:last-child {
-    border-right: none;
-  }
-`;
+};
 
 type NotationProps = {
-  children?: ReactNode;
-  startStyle: 'default' | 'none' | 'repeat';
-  endStyle: 'default' | 'none' | 'repeat';
+  values: string[];
   onClick?: () => void;
-  values?: string[];
 };
 const Notation = (props: NotationProps) => {
-  const { values, children, startStyle, endStyle, onClick } = props;
-  const meter = 4;
+  const { values, onClick } = props;
 
-  const childrenArray = useMemo(() => {
-    let splitedArray: ReactNode[] = [];
-    const array: ReactNode[] = Children.toArray(children);
-    array.forEach((child) => {
-      const newElement = typeof child === 'string' ? Array.from(child) : child;
-      splitedArray = splitedArray.concat(newElement);
+  const bars = useMemo(() => {
+    const { length } = values[0];
+    const meter = guessMeter(length);
+    const rows = values.map((value) => chunk(chunk(value, 2), meter));
+    const bars: string[][][][] = [];
+    rows.forEach((row, rowIndex) => {
+      row.forEach((bar, barIndex) => {
+        if (!bars[barIndex]) bars[barIndex] = new Array(rows.length);
+        bars[barIndex][rowIndex] = bar;
+      });
     });
-    return splitedArray;
-  }, [children]);
-
-  const { length } = values ? values[0] : childrenArray;
+    return bars;
+  }, [values]);
 
   return (
-    <Wrapper onClick={onClick}>
-      {startStyle !== 'none' && (
-        <div className="relative" style={{ margin: '2px 0px' }}>
-          <SideLine />
-        </div>
-      )}
-      {chunk(range(length), 2 * meter).map((indices, i) => (
-        <Bar key={i} className={clsx(endStyle, values && 'multi-line')}>
-          {values
-            ? values.map((value, key) => (
-                <div key={key}>
-                  {chunk(indices, 2).map((indices2, i2) => (
-                    <Beat key={i2}>
-                      {indices2.map((index) => value[index])}
-                    </Beat>
-                  ))}
-                </div>
-              ))
-            : chunk(indices, 2).map((indices2, i2) => (
-                <Beat key={i2}>
-                  {indices2.map((index) => childrenArray[index])}
-                </Beat>
+    <div onClick={onClick} className="flex p-2 tracking-widest">
+      {bars.map((bar) => (
+        <div className="border-r first:border-l px-1">
+          {bar.map((row) => (
+            <div className="flex">
+              {row.map((beat) => (
+                <div className="flex px-1">{beat}</div>
               ))}
-        </Bar>
-      ))}
-      {endStyle !== 'none' && (
-        <div className="relative" style={{ margin: '2px 0px' }}>
-          <SideLine />
+            </div>
+          ))}
         </div>
-      )}
-    </Wrapper>
+      ))}
+    </div>
   );
 };
 Notation.defaultProps = {
