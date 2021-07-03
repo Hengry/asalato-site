@@ -139,31 +139,29 @@ const Resolver = (props: ResolverProps) => {
             I'm Calculating...
           </div>
         )}
-        <Direction />
         {openSolutionPanel && <SolutionPanel solutions={solutions} />}
-        <div className="bottom-0 absolute px-4 z-10 inset-x-0 flex flex-col items-center">
-          {!openSolutionPanel && !loading && (
-            <div className="flex justify-between p-2">
-              <PanelButton onClick={handleBackspace}>←</PanelButton>
-              <PanelButton onClick={handleInputClick('_')}>_</PanelButton>
-              <PanelButton onClick={handleInputClick('X')}>X</PanelButton>
-            </div>
-          )}
-          <div className="flex justify-center w-full p-2 border-t border-surface">
-            <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
-            <PanelButton
-              onClick={() => {
-                setInput('');
-                setRythm('');
-                setOpenSolutionPanel(false);
-              }}
-            >
-              Reset
-            </PanelButton>
-            <PanelButton type="submit" color="main">
-              gogo
-            </PanelButton>
+        {!openSolutionPanel && !loading && (
+          <div className="absolute bottom-32 top-24 pb-2 flex justify-center items-end w-full">
+            <Direction />
+            <PanelButton onClick={handleBackspace}>←</PanelButton>
+            <PanelButton onClick={handleInputClick('_')}>_</PanelButton>
+            <PanelButton onClick={handleInputClick('X')}>X</PanelButton>
           </div>
+        )}
+        <div className="absolute bottom-0 flex justify-center w-full p-2 border-t border-surface">
+          <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
+          <PanelButton
+            onClick={() => {
+              setInput('');
+              setRythm('');
+              setOpenSolutionPanel(false);
+            }}
+          >
+            Reset
+          </PanelButton>
+          <PanelButton type="submit" color="main">
+            gogo
+          </PanelButton>
         </div>
       </Dialog>
     </>

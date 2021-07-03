@@ -8,7 +8,7 @@ const Direction = () => {
     <>
       <button
         type="button"
-        className="absolute right-0 top-24 z-10 p-4"
+        className="absolute right-0 top-0 z-10 p-4"
         onClick={() => {
           setOpen(true);
         }}
