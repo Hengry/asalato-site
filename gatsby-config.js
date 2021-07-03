@@ -27,9 +27,12 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-manifest',
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        icon: 'src/images/icon.png',
+        icon: 'src/favicons/asalato.svg',
+        name: `Asalato Resolver`,
+        short_name: `Asalato Resolver`,
+        legacy: true,
       },
     },
     // 'gatsby-plugin-offline',
