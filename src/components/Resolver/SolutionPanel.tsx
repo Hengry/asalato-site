@@ -55,9 +55,12 @@ const SolutionPanel = (props: SolutionTableProps) => {
   );
 
   const filteredSolutions = useMemo(() => {
-    return solutions.filter(({ tags }) =>
-      tags.every((tag) => filters.includes(tag))
-    );
+    return solutions
+      .map((solution) => ({
+        ...solution,
+        key: solution.text.left + solution.text.right,
+      }))
+      .filter(({ tags }) => tags.every((tag) => filters.includes(tag)));
   }, [solutions, filters]);
 
   return (
@@ -94,19 +97,19 @@ const SolutionPanel = (props: SolutionTableProps) => {
       <div className="flex px-2 mb-2 text-gray-500">
         {filteredSolutions.length} results
       </div>
-      {filteredSolutions.map(({ text: { left, right }, tags }, index) => (
-        <div key={left + right} className="table py-2">
+      {filteredSolutions.map(({ key, text, tags }, index) => (
+        <div key={key} className="table py-2">
           <div className="flex items-center">
             {tags.map((tag) => (
               <Tag key={tag}>{tag}</Tag>
             ))}
             <div className="ml-auto">{index + 1}</div>
           </div>
-          <Notation values={[left, right]} />
+          <Notation values={text} />
         </div>
       ))}
     </div>
   );
 };
 
-export default SolutionPanel;
+export default React.memo(SolutionPanel);

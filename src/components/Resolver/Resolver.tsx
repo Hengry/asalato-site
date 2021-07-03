@@ -23,6 +23,7 @@ const Resolver = (props: ResolverProps) => {
   const [solutions, setSolutions] = useState<Solution[]>([]);
   const [openSolutionPanel, setOpenSolutionPanel] = useState<boolean>(false);
   const [input, setInput] = useState('');
+  const [preference, setPreference] = useState('Flip Flop');
 
   useEffect(() => {
     if (rythm) {
@@ -38,7 +39,10 @@ const Resolver = (props: ResolverProps) => {
           setOpenSolutionPanel(true);
         };
 
-        worker.postMessage(rythm);
+        worker.postMessage({
+          rythm,
+          options: { preferGrab: preference === 'Grab' },
+        });
       } else {
         const result = findPath(rythm);
         setLoading(false);
@@ -46,7 +50,7 @@ const Resolver = (props: ResolverProps) => {
         setOpenSolutionPanel(true);
       }
     }
-  }, [rythm]);
+  }, [rythm, preference]);
 
   const handleClicked = useCallback(() => {
     setOpen(true);
@@ -112,10 +116,21 @@ const Resolver = (props: ResolverProps) => {
             value={input}
             onChange={handleChange}
             className="tracking-widest w-full"
+            disabled={loading}
           />
           <div className="flex justify-end py-2">
             Prefer
-            <button className="rounded-lg ml-2 px-2 border">Flip Flop</button>
+            <button
+              type="button"
+              className="rounded-lg ml-2 px-2 border"
+              onClick={() => {
+                setPreference((prev) =>
+                  prev === 'Flip Flop' ? 'Grab' : 'Flip Flop'
+                );
+              }}
+            >
+              {preference}
+            </button>
           </div>
         </Dialog.Title>
         {loading && (
@@ -125,7 +140,7 @@ const Resolver = (props: ResolverProps) => {
         )}
         {openSolutionPanel && <SolutionPanel solutions={solutions} />}
         <div className="bottom-0 absolute px-4 z-10 inset-x-0 flex flex-col items-center">
-          {!openSolutionPanel && (
+          {!openSolutionPanel && !loading && (
             <div className="flex justify-between p-2">
               <PanelButton onClick={handleBackspace}>
                 ←

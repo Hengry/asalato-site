@@ -16,16 +16,16 @@ const guessMeter = (length: number) => {
 };
 
 type NotationProps = {
-  values: string[];
+  values: { left: string; right: string };
   onClick?: () => void;
 };
 const Notation = (props: NotationProps) => {
   const { values, onClick } = props;
 
   const bars = useMemo(() => {
-    const { length } = values[0];
-    const meter = guessMeter(length);
-    const rows = values.map((value) => chunk(chunk(value, 2), meter));
+    const { left, right } = values;
+    const meter = guessMeter(Math.max(left.length, right.length));
+    const rows = [left, right].map((value) => chunk(chunk(value, 2), meter));
     const bars: string[][][][] = [];
     rows.forEach((row, rowIndex) => {
       row.forEach((bar, barIndex) => {
@@ -38,12 +38,14 @@ const Notation = (props: NotationProps) => {
 
   return (
     <div onClick={onClick} className="flex p-2 tracking-widest">
-      {bars.map((bar) => (
-        <div className="border-r first:border-l px-1">
-          {bar.map((row) => (
-            <div className="flex">
-              {row.map((beat) => (
-                <div className="flex px-1">{beat}</div>
+      {bars.map((bar, index) => (
+        <div key={index} className="border-r first:border-l px-1">
+          {bar.map((row, index) => (
+            <div key={index} className="flex">
+              {row.map((beat, index) => (
+                <div key={index} className="flex px-1">
+                  {beat}
+                </div>
               ))}
             </div>
           ))}
@@ -57,4 +59,4 @@ Notation.defaultProps = {
   endStyle: 'default',
 };
 
-export default Notation;
+export default React.memo(Notation);
