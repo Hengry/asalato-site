@@ -33,6 +33,9 @@ module.exports = {
         name: `Asalato Resolver`,
         short_name: `Asalato Resolver`,
         legacy: true,
+        icon_options: {
+          purpose: `any maskable`,
+        },
       },
     },
     // 'gatsby-plugin-offline',
