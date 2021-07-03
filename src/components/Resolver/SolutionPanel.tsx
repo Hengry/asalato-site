@@ -37,7 +37,6 @@ interface SolutionTableProps {
 const SolutionPanel = (props: SolutionTableProps) => {
   const { solutions } = props;
   const [filters, setFilters] = useState<string[]>(options);
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
 
   const handleFilterTagClicked = useCallback(
     (option) => () => {
@@ -66,7 +65,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
   return (
     <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto text-center">
       <div className="inline-flex mt-4 pb-0.5 items-center relative">
-        <div className="mr-2 mt-1.5 text-gray-500 absolute right-full">
+        <div className="mr-2 mt-1 text-gray-500 absolute right-full">
           <SearchIcon />
         </div>
         {options.map((option) => (
@@ -79,26 +78,11 @@ const SolutionPanel = (props: SolutionTableProps) => {
           </Tag>
         ))}
       </div>
-      {openFilter && (
-        <div className="flex flex-col space-y-4">
-          {Object.keys(filterOptions).map((category) => (
-            <div key={category} className="flex flex-col space-y-2">
-              <div>{category}</div>
-              {filterOptions[category].map((option) => (
-                <div key={option}>
-                  <Tag>{option}</Tag>
-                  <div className="ml-2 inline">{option}</div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-      <div className="flex px-2 mb-2 text-gray-500">
+      <div className="flex px-2 py-1 text-gray-500">
         {filteredSolutions.length} results
       </div>
       {filteredSolutions.map(({ key, text, tags }, index) => (
-        <div key={key} className="table py-2">
+        <div key={key} className="table py-1">
           <div className="flex items-center">
             {tags.map((tag) => (
               <Tag key={tag}>{tag}</Tag>

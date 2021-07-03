@@ -4,12 +4,11 @@ import styled from '@emotion/styled';
 
 import { findPath } from 'utils/rythm';
 import PanelButton from 'components/PanelButton';
-import SettingIcon from 'components/icons/SettingIcon';
 import { Solution } from 'interfaces/data';
-
-import SolutionPanel from './SolutionPanel';
-
 import ResolverWorker from 'utils/resolver.worker';
+
+import Direction from './Direction';
+import SolutionPanel from './SolutionPanel';
 
 interface ResolverProps {
   rythm?: string;
@@ -110,14 +109,16 @@ const Resolver = (props: ResolverProps) => {
       >
         <Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur" />
         <Dialog.Title className="absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4 rounded-xl">
-          <input
-            name="input"
-            type="text"
-            value={input}
-            onChange={handleChange}
-            className="tracking-widest w-full"
-            disabled={loading}
-          />
+          <div className="flex">
+            <input
+              name="input"
+              type="text"
+              value={input}
+              onChange={handleChange}
+              className="tracking-widest flex-1"
+              disabled={loading}
+            />
+          </div>
           <div className="flex justify-end py-2">
             Prefer
             <button
@@ -138,25 +139,14 @@ const Resolver = (props: ResolverProps) => {
             I'm Calculating...
           </div>
         )}
+        <Direction />
         {openSolutionPanel && <SolutionPanel solutions={solutions} />}
         <div className="bottom-0 absolute px-4 z-10 inset-x-0 flex flex-col items-center">
           {!openSolutionPanel && !loading && (
             <div className="flex justify-between p-2">
-              <PanelButton onClick={handleBackspace}>
-                ←
-                <br />
-                (back)
-              </PanelButton>
-              <PanelButton onClick={handleInputClick('_')}>
-                _
-                <br />
-                (NoSound)
-              </PanelButton>
-              <PanelButton onClick={handleInputClick('X')}>
-                X
-                <br />
-                (Sound)
-              </PanelButton>
+              <PanelButton onClick={handleBackspace}>←</PanelButton>
+              <PanelButton onClick={handleInputClick('_')}>_</PanelButton>
+              <PanelButton onClick={handleInputClick('X')}>X</PanelButton>
             </div>
           )}
           <div className="flex justify-center w-full p-2 border-t border-surface">
