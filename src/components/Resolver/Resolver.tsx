@@ -7,7 +7,7 @@ import PanelButton from 'components/PanelButton';
 import { Solution } from 'interfaces/data';
 import ResolverWorker from 'utils/resolver.worker';
 
-import Direction from './Direction';
+import InputDirection from './InputDirection';
 import SolutionPanel from './SolutionPanel';
 
 interface ResolverProps {
@@ -142,7 +142,7 @@ const Resolver = (props: ResolverProps) => {
         {openSolutionPanel && <SolutionPanel solutions={solutions} />}
         {!openSolutionPanel && !loading && (
           <div className="absolute bottom-32 top-24 pb-2 flex justify-center items-end w-full">
-            <Direction />
+            <InputDirection />
             <PanelButton onClick={handleBackspace}>←</PanelButton>
             <PanelButton onClick={handleInputClick('_')}>_</PanelButton>
             <PanelButton onClick={handleInputClick('X')}>X</PanelButton>

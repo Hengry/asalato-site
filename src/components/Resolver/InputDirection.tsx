@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import QuestionMarkCircleIcon from 'components/icons/QuestionMarkCircleIcon';
+import XIcon from 'components/icons/XIcon';
 
-const Direction = () => {
+const InputDirection = () => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -17,11 +18,14 @@ const Direction = () => {
       </button>
       {open && (
         <div
-          className="absolute inset-0 z-20 bg-opacity-80 bg-background text-3xl"
+          className="fixed inset-0 z-20 bg-opacity-80 bg-background text-3xl"
           onClick={() => {
             setOpen(false);
           }}
         >
+          <div className="absolute right-2 top-2 text-gray-500">
+            <XIcon />
+          </div>
           <div className="m-4 h-24 border-4 rounded-xl flex justify-center items-center">
             Input Area 1
           </div>
@@ -42,9 +46,6 @@ const Direction = () => {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-60 right-0 m-4 text-base">
-            Click to exit.
-          </div>
           <div className="absolute bottom-32 inset-x-0 m-4 h-24 border-4 rounded-xl flex justify-center items-center">
             Input Area 2
           </div>
@@ -57,4 +58,4 @@ const Direction = () => {
   );
 };
 
-export default React.memo(Direction);
+export default React.memo(InputDirection);

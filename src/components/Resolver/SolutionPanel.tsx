@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Notation from 'components/Notation';
 import Tag from 'components/Tag';
 import SearchIcon from 'components/icons/SearchIcon';
 import { Solution } from 'interfaces/data';
-import { useCallback } from 'react';
+
+import SolutionDirection from './SolutionDirection';
 
 const recommandSetting = {
   begineer: {
@@ -78,6 +79,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
           </Tag>
         ))}
       </div>
+      <SolutionDirection />
       <div className="flex px-2 py-1 text-gray-500">
         {filteredSolutions.length} results
       </div>
