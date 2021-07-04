@@ -50,12 +50,6 @@ module.exports = {
             purpose: 'maskable',
           },
           {
-            src: 'src/favicons/maskable_icon_128.png',
-            sizes: '128x128',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
             src: 'src/favicons/maskable_icon_192.png',
             sizes: '192x192',
             type: 'image/png',
