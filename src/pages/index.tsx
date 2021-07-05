@@ -38,29 +38,27 @@ declare module '@emotion/react' {
   }
 }
 
-const Main = styled.div`
-  margin: 16px;
-`;
-
 const IndexPage = () => {
-  // const [resolverInput, openResolver, triggerResolver] = useInitResolver();
-  const [resolverInput, triggerResolver] = useState();
-
   return (
     <ThemeProvider theme={DarkTheme}>
       <link
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
         rel="stylesheet"
       ></link>
-      <Main>
-        <GlobalStyle />
-        <title>Asalato Resolver</title>
-        <h1 className="text-3xl text-center">Asalato Resolver</h1>
+      <GlobalStyle />
+      <title>Asalato Resolver</title>
+      <div className="fixed inset-4 flex flex-col">
+        <h1 className="text-3xl text-center mt-4">Asalato Resolver</h1>
         <div className="text-right">Created by Hengry</div>
+        <div className="flex-1 m-4 flex flex-col">
+          <p className="my-4">Tap the asalato to start Asalato Resolver.</p>
+          <p className="my-4">Current space is preserve for other functions.</p>
+          <p className="my-4">Current version is priority to device.</p>
+        </div>
         <div className="absolute bottom-0 inset-x-0 p-4 flex justify-end">
           <Resolver />
         </div>
-      </Main>
+      </div>
     </ThemeProvider>
   );
 };

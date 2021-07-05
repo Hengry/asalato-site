@@ -125,7 +125,7 @@ const Resolver = (props: ResolverProps) => {
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
           >
-            <div className="fixed z-10 top-0 inset-x-0 bottom-32 flex flex-col backdrop-filter backdrop-blur">
+            <div className="fixed z-10 top-0 inset-x-0 bottom-32 flex flex-col border-b border-surface bg-background bg-opacity-80 backdrop-filter backdrop-blur">
               <div className="bg-surface mx-4 mt-4 h-20 p-4 rounded-xl">
                 <div className="flex">
                   <input
@@ -175,7 +175,7 @@ const Resolver = (props: ResolverProps) => {
             leaveFrom="translate-y-0"
             leaveTo="translate-y-full"
           >
-            <div className="absolute bottom-0 flex justify-center w-full p-2 border-t border-surface backdrop-filter backdrop-blur">
+            <div className="absolute bottom-0 flex justify-center w-full p-2 border-t border-surface bg-background bg-opacity-80 backdrop-filter backdrop-blur">
               <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
               <PanelButton
                 onClick={() => {
