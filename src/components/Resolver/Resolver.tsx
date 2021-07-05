@@ -1,11 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Dialog } from '@headlessui/react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import styled from '@emotion/styled';
 
 import { findPath } from 'utils/rythm';
 import PanelButton from 'components/PanelButton';
 import { Solution } from 'interfaces/data';
 import ResolverWorker from 'utils/resolver.worker';
+import Asalato from 'components/icons/Asalato';
 
 import InputDirection from './InputDirection';
 import SolutionPanel from './SolutionPanel';
@@ -18,7 +25,7 @@ const Resolver = (props: ResolverProps) => {
   const { rythm: propsRythm } = props;
   const [rythm, setRythm] = useState(propsRythm);
   const [loading, setLoading] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
   const [solutions, setSolutions] = useState<Solution[]>([]);
   const [openSolutionPanel, setOpenSolutionPanel] = useState<boolean>(false);
   const [input, setInput] = useState('');
@@ -95,75 +102,97 @@ const Resolver = (props: ResolverProps) => {
   return (
     <>
       <div
-        className="rounded-full w-16 h-16 bg-gray-700 flex items-center justify-center"
+        className="rounded-full w-20 h-20 bg-gray-700 flex items-center justify-center"
         onClick={handleClicked}
-      />
-      <Dialog
-        as="form"
-        autoComplete="off"
-        onSubmit={handleSubmit}
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
       >
-        <Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur" />
-        <Dialog.Title className="absolute z-10 bg-surface top-0 inset-x-0 m-4 h-20 p-4 rounded-xl">
-          <div className="flex">
-            <input
-              name="input"
-              type="text"
-              value={input}
-              onChange={handleChange}
-              className="tracking-widest flex-1"
-              disabled={loading}
-            />
-          </div>
-          <div className="flex justify-end py-2">
-            Prefer
-            <button
-              type="button"
-              className="rounded-lg ml-2 px-2 border"
-              onClick={() => {
-                setPreference((prev) =>
-                  prev === 'Flip Flop' ? 'Grab' : 'Flip Flop'
-                );
-              }}
-            >
-              {preference}
-            </button>
-          </div>
-        </Dialog.Title>
-        {loading && (
-          <div className="absolute z-8 top-24 inset-x-0 m-4 p-2">
-            I'm Calculating...
-          </div>
-        )}
-        {openSolutionPanel && <SolutionPanel solutions={solutions} />}
-        {!openSolutionPanel && !loading && (
-          <div className="absolute bottom-32 top-24 pb-2 flex justify-center items-end w-full">
-            <InputDirection />
-            <PanelButton onClick={handleBackspace}>←</PanelButton>
-            <PanelButton onClick={handleInputClick('_')}>_</PanelButton>
-            <PanelButton onClick={handleInputClick('X')}>X</PanelButton>
-          </div>
-        )}
-        <div className="absolute bottom-0 flex justify-center w-full p-2 border-t border-surface">
-          <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
-          <PanelButton
-            onClick={() => {
-              setInput('');
-              setRythm('');
-              setOpenSolutionPanel(false);
-            }}
+        <Asalato />
+      </div>
+      <Transition show={open} appear>
+        <Dialog
+          as="form"
+          autoComplete="off"
+          onSubmit={handleSubmit}
+          onClose={() => {
+            setOpen(false);
+          }}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="transition ease-out duration-300 transform"
+            enterFrom="-translate-y-full"
+            enterTo="translate-y-0"
+            leave="transition ease-in duration-300 transform"
+            leaveFrom="translate-y-0"
+            leaveTo="-translate-y-full"
           >
-            Reset
-          </PanelButton>
-          <PanelButton type="submit" color="main">
-            gogo
-          </PanelButton>
-        </div>
-      </Dialog>
+            <div className="fixed z-10 top-0 inset-x-0 bottom-32 flex flex-col backdrop-filter backdrop-blur">
+              <div className="bg-surface mx-4 mt-4 h-20 p-4 rounded-xl">
+                <div className="flex">
+                  <input
+                    name="input"
+                    type="text"
+                    value={input}
+                    onChange={handleChange}
+                    className="tracking-widest flex-1"
+                    disabled={loading}
+                  />
+                </div>
+                <div className="flex justify-end py-2">
+                  Prefer
+                  <button
+                    type="button"
+                    className="rounded-lg ml-2 px-2 border"
+                    onClick={() => {
+                      setPreference((prev) =>
+                        prev === 'Flip Flop' ? 'Grab' : 'Flip Flop'
+                      );
+                    }}
+                  >
+                    {preference}
+                  </button>
+                </div>
+              </div>
+              {!openSolutionPanel && !loading && (
+                <div className="flex-1 flex justify-center items-end w-full relative p-2">
+                  <InputDirection />
+                  <PanelButton onClick={handleBackspace}>←</PanelButton>
+                  <PanelButton onClick={handleInputClick('_')}>_</PanelButton>
+                  <PanelButton onClick={handleInputClick('X')}>X</PanelButton>
+                </div>
+              )}
+              {loading && (
+                <div className="flex-1 m-4 p-2">I'm Calculating...</div>
+              )}
+              {openSolutionPanel && <SolutionPanel solutions={solutions} />}
+            </div>
+          </Transition.Child>
+          <Transition.Child
+            as={Fragment}
+            enter="transition ease-out duration-300 transform"
+            enterFrom="translate-y-full"
+            enterTo="translate-y-0"
+            leave="transition ease-in duration-300 transform"
+            leaveFrom="translate-y-0"
+            leaveTo="translate-y-full"
+          >
+            <div className="absolute bottom-0 flex justify-center w-full p-2 border-t border-surface backdrop-filter backdrop-blur">
+              <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
+              <PanelButton
+                onClick={() => {
+                  setInput('');
+                  setRythm('');
+                  setOpenSolutionPanel(false);
+                }}
+              >
+                Reset
+              </PanelButton>
+              <PanelButton type="submit" color="main">
+                gogo
+              </PanelButton>
+            </div>
+          </Transition.Child>
+        </Dialog>
+      </Transition>
     </>
   );
 };

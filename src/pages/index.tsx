@@ -55,7 +55,8 @@ const IndexPage = () => {
       <Main>
         <GlobalStyle />
         <title>Asalato Resolver</title>
-        {/* <Note title="test" selected /> */}
+        <h1 className="text-3xl text-center">Asalato Resolver</h1>
+        <div className="text-right">Created by Hengry</div>
         <div className="absolute bottom-0 inset-x-0 p-4 flex justify-end">
           <Resolver />
         </div>

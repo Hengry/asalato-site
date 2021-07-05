@@ -18,7 +18,7 @@ const InputDirection = () => {
       </button>
       {open && (
         <div
-          className="fixed inset-0 z-20 bg-opacity-80 bg-background text-3xl"
+          className="fixed inset-0 z-10 h-screen bg-opacity-80 bg-background text-3xl"
           onClick={() => {
             setOpen(false);
           }}

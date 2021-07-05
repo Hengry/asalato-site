@@ -44,7 +44,7 @@ const SolutionDirection = () => {
       </button>
       {open && (
         <div
-          className="fixed inset-0 z-20 bg-opacity-90 bg-background text-base text-left"
+          className="fixed inset-0 z-20 h-screen bg-opacity-90 bg-background text-base text-left"
           onClick={() => {
             setOpen(false);
           }}

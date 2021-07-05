@@ -64,7 +64,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
   }, [solutions, filters]);
 
   return (
-    <div className="absolute top-20 bottom-28 inset-x-0 m-4 overflow-auto text-center">
+    <div className="relative flex-1 mx-4 overflow-auto text-center">
       <div className="inline-flex mt-4 pb-0.5 items-center relative">
         <div className="mr-2 mt-1 text-gray-500 absolute right-full">
           <SearchIcon />
