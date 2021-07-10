@@ -5,18 +5,19 @@ import SearchIcon from 'components/icons/SearchIcon';
 import { Solution } from 'interfaces/data';
 
 import SolutionDirection from './SolutionDirection';
+import { useEffect } from 'react';
 
 const recommandSetting = {
-  begineer: {
-    startDirection: ['forward'],
-    cycle: ['symmetry'],
-    technique: ['airTurn', 'click'],
-  },
-  expert: {
-    startDirection: ['forward', 'backward', 'twoWay'],
-    cycle: ['antisymmetry', 'symmetry'],
-    technique: ['airTurn', 'click'],
-  },
+  beginer: ['forward', 'symmetry', 'airTurn', 'click'],
+  expert: [
+    'forward',
+    'backward',
+    'twoWay',
+    'antisymmetry',
+    'symmetry',
+    'airTurn',
+    'click',
+  ],
 };
 
 const filterOptions: { [k: string]: string[] } = {
@@ -37,7 +38,15 @@ interface SolutionTableProps {
 
 const SolutionPanel = (props: SolutionTableProps) => {
   const { solutions } = props;
-  const [filters, setFilters] = useState<string[]>(options);
+  const [filters, setFilters] = useState<string[]>(recommandSetting.beginer);
+
+  useEffect(() => {
+    const storageFilters = localStorage.getItem('solutionFilters');
+    if (storageFilters) {
+      const lastFilters = JSON.parse(storageFilters);
+      setFilters(lastFilters);
+    }
+  }, []);
 
   const handleFilterTagClicked = useCallback(
     (option) => () => {
@@ -46,9 +55,12 @@ const SolutionPanel = (props: SolutionTableProps) => {
           const index = prev.findIndex((e) => e === option);
           const newArray = [...prev];
           newArray.splice(index, 1);
+          localStorage.setItem('solutionFilters', JSON.stringify(newArray));
           return newArray;
         }
-        return prev.concat(option);
+        const newArray = prev.concat(option);
+        localStorage.setItem('solutionFilters', JSON.stringify(newArray));
+        return newArray;
       });
     },
     []
@@ -83,17 +95,21 @@ const SolutionPanel = (props: SolutionTableProps) => {
       <div className="flex px-2 py-1 text-gray-500">
         {filteredSolutions.length} results
       </div>
-      {filteredSolutions.map(({ key, text, tags }, index) => (
-        <div key={key} className="table py-1">
-          <div className="flex items-center">
-            {tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-            <div className="ml-auto">{index + 1}</div>
+      {filteredSolutions.length > 0 ? (
+        filteredSolutions.map(({ key, text, tags }, index) => (
+          <div key={key} className="table py-1">
+            <div className="flex items-center">
+              {tags.map((tag) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+              <div className="ml-auto">{index + 1}</div>
+            </div>
+            <Notation values={text} />
           </div>
-          <Notation values={text} />
-        </div>
-      ))}
+        ))
+      ) : (
+        <div>no result, consider enable more tags above.</div>
+      )}
     </div>
   );
 };
