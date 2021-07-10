@@ -7,7 +7,7 @@ export default () => (
     width="320pt"
     height="320pt"
   >
-    <g clip-path="url(#_clipPath_5olOSXxsq3xp1xYeZ32mHpPu7bPSazhg)">
+    <g clipPath="url(#_clipPath_5olOSXxsq3xp1xYeZ32mHpPu7bPSazhg)">
       <g>
         <path
           d=" M 5.226 320 C 4.105 319.77 3.015 319.121 1.983 318.089 C 0.636 316.743 -0.088 315.2 0.009 313.906 C 11.21 308.161 10.888 303.67 11.21 303.349 C 12.313 302.246 15.497 304.657 17.397 306.557 C 19.297 308.457 12.585 316.984 5.226 320 Z "
@@ -15,7 +15,7 @@ export default () => (
         />
         <g>
           <circle
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
             cx="27.500000000000025"
             cy="292.50000000000006"
             r="27.49999999999998"
@@ -62,7 +62,7 @@ export default () => (
       <g>
         <g>
           <circle
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
             cx="160.00000000000009"
             cy="159.99999999999997"
             r="160.00000000000006"
