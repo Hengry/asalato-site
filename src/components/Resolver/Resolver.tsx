@@ -16,6 +16,7 @@ import Asalato from 'components/icons/Asalato';
 
 import InputDirection from './InputDirection';
 import SolutionPanel from './SolutionPanel';
+import { useRef } from 'react';
 
 interface ResolverProps {
   rythm?: string;
@@ -30,6 +31,7 @@ const Resolver = (props: ResolverProps) => {
   const [openSolutionPanel, setOpenSolutionPanel] = useState<boolean>(false);
   const [input, setInput] = useState('');
   const [preference, setPreference] = useState('Flip Flop');
+  const activeWorker = useRef<Worker | null>(null);
 
   useEffect(() => {
     if (rythm) {
@@ -39,6 +41,7 @@ const Resolver = (props: ResolverProps) => {
 
       if (window.Worker) {
         const worker = new ResolverWorker();
+        activeWorker.current = worker;
         worker.onmessage = (msg: MessageEvent) => {
           setLoading(false);
           setSolutions(msg.data);
@@ -89,6 +92,14 @@ const Resolver = (props: ResolverProps) => {
 
   const handleBackspace = useCallback(() => {
     setInput((prev) => prev.slice(0, prev.length - 1));
+  }, []);
+
+  const handleReset = useCallback(() => {
+    activeWorker?.current?.terminate();
+    setInput('');
+    setRythm('');
+    setLoading(false);
+    setOpenSolutionPanel(false);
   }, []);
 
   const handleSubmit = useCallback((e: React.SyntheticEvent) => {
@@ -177,15 +188,7 @@ const Resolver = (props: ResolverProps) => {
           >
             <div className="absolute bottom-0 flex justify-center w-full p-2 border-t border-surface bg-background bg-opacity-80 backdrop-filter backdrop-blur">
               <PanelButton onClick={() => setOpen(false)}>Close</PanelButton>
-              <PanelButton
-                onClick={() => {
-                  setInput('');
-                  setRythm('');
-                  setOpenSolutionPanel(false);
-                }}
-              >
-                Reset
-              </PanelButton>
+              <PanelButton onClick={handleReset}>Reset</PanelButton>
               <PanelButton type="submit" color="main">
                 gogo
               </PanelButton>
