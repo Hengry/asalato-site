@@ -77,8 +77,8 @@ const SolutionPanel = (props: SolutionTableProps) => {
 
   return (
     <div className="relative flex-1 mx-4 overflow-auto text-center">
-      <div className="inline-flex mt-4 pb-0.5 items-center relative">
-        <div className="mr-2 mt-1 text-gray-500 absolute right-full">
+      <div className="inline-flex flex-wrap mt-4 mx-8 pb-0.5 items-center relative">
+        <div className="mr-2 top-2 text-gray-500 absolute right-full">
           <SearchIcon />
         </div>
         {options.map((option) => (
