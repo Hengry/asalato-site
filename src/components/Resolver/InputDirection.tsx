@@ -18,12 +18,12 @@ const InputDirection = () => {
       </button>
       {open && (
         <div
-          className="fixed inset-0 z-10 h-screen bg-opacity-80 bg-background text-3xl"
+          className="fixed inset-0 z-10 h-screen bg-opacity-80 bg-background text-3xl overflow-auto"
           onClick={() => {
             setOpen(false);
           }}
         >
-          <div className="absolute right-2 top-2 text-gray-500">
+          <div className="fixed right-2 top-2 text-gray-500">
             <XIcon />
           </div>
           <div className="m-4 h-24 border-4 rounded-xl flex justify-center items-center">
