@@ -25,10 +25,11 @@ interface ResolverProps {
 const Resolver = (props: ResolverProps) => {
   const { rythm: propsRythm } = props;
   const [rythm, setRythm] = useState(propsRythm);
-  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(true);
   const [solutions, setSolutions] = useState<Solution[]>([]);
-  const [openSolutionPanel, setOpenSolutionPanel] = useState<boolean>(false);
+  const [resolverStatus, setResolverStatus] = useState<
+    'input' | 'loading' | 'result'
+  >('input');
   const [input, setInput] = useState('');
   const [preference, setPreference] = useState('Flip Flop');
   const activeWorker = useRef<Worker | null>(null);
@@ -36,16 +37,14 @@ const Resolver = (props: ResolverProps) => {
   useEffect(() => {
     if (rythm) {
       setOpen(true);
-      setLoading(true);
-      setOpenSolutionPanel(false);
+      setResolverStatus('loading');
 
       if (window.Worker) {
         const worker = new ResolverWorker();
         activeWorker.current = worker;
         worker.onmessage = (msg: MessageEvent) => {
-          setLoading(false);
+          setResolverStatus('result');
           setSolutions(msg.data);
-          setOpenSolutionPanel(true);
         };
 
         worker.postMessage({
@@ -54,9 +53,8 @@ const Resolver = (props: ResolverProps) => {
         });
       } else {
         const result = findPath(rythm);
-        setLoading(false);
         setSolutions(result);
-        setOpenSolutionPanel(true);
+        setResolverStatus('result');
       }
     }
   }, [rythm, preference]);
@@ -98,8 +96,7 @@ const Resolver = (props: ResolverProps) => {
     activeWorker?.current?.terminate();
     setInput('');
     setRythm('');
-    setLoading(false);
-    setOpenSolutionPanel(false);
+    setResolverStatus('input');
   }, []);
 
   const handleSubmit = useCallback((e: React.SyntheticEvent) => {
@@ -139,14 +136,16 @@ const Resolver = (props: ResolverProps) => {
             <div className="fixed z-10 top-0 inset-x-0 bottom-32 flex flex-col border-b border-surface bg-background bg-opacity-80 backdrop-filter backdrop-blur">
               <div className="bg-surface mx-4 mt-4 h-20 p-4 rounded-xl">
                 <div className="flex">
-                  <input
-                    name="input"
-                    type="text"
-                    value={input}
-                    onChange={handleChange}
-                    className="tracking-widest flex-1"
-                    disabled={loading}
-                  />
+                  {
+                    <input
+                      name="input"
+                      type="text"
+                      value={input}
+                      onChange={handleChange}
+                      className="tracking-widest flex-1"
+                      disabled={resolverStatus === 'loading'}
+                    />
+                  }
                 </div>
                 <div className="flex justify-end py-2">
                   Prefer
@@ -163,7 +162,7 @@ const Resolver = (props: ResolverProps) => {
                   </button>
                 </div>
               </div>
-              {!openSolutionPanel && !loading && (
+              {resolverStatus === 'input' && (
                 <div className="flex-1 flex justify-center items-end w-full relative p-2">
                   <InputDirection />
                   <PanelButton onClick={handleBackspace}>←</PanelButton>
@@ -171,10 +170,12 @@ const Resolver = (props: ResolverProps) => {
                   <PanelButton onClick={handleInputClick('X')}>X</PanelButton>
                 </div>
               )}
-              {loading && (
+              {resolverStatus === 'loading' && (
                 <div className="flex-1 m-4 p-2">I'm Calculating...</div>
               )}
-              {openSolutionPanel && <SolutionPanel solutions={solutions} />}
+              {resolverStatus === 'result' && (
+                <SolutionPanel solutions={solutions} />
+              )}
             </div>
           </Transition.Child>
           <Transition.Child
