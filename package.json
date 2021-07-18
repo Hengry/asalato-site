@@ -12,7 +12,8 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "preload-fonts": "gatsby-preload-fonts"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -26,6 +27,7 @@
     "gatsby-plugin-google-analytics": "^3.7.1",
     "gatsby-plugin-manifest": "^3.8.0",
     "gatsby-plugin-offline": "^4.8.0",
+    "gatsby-plugin-preload-fonts": "^2.9.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "worker-loader": "^3.0.8"

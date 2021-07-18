@@ -9,6 +9,7 @@ module.exports = {
     'gatsby-plugin-gatsby-cloud',
     'gatsby-plugin-typescript',
     'gatsby-plugin-postcss',
+    `gatsby-plugin-preload-fonts`,
     {
       resolve: 'gatsby-plugin-root-import',
       options: {

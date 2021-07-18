@@ -1,5 +1,6 @@
 import React from 'react';
 import { Global, css, useTheme } from '@emotion/react';
+import '@fontsource/space-mono';
 
 export default () => {
   const theme = useTheme();
