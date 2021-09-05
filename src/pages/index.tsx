@@ -44,7 +44,11 @@ const IndexPage = () => {
       <link
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
         rel="stylesheet"
-      ></link>
+      />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      />
       <GlobalStyle />
       <title>Asalato Resolver</title>
       <div className="fixed inset-4 flex flex-col">
