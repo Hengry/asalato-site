@@ -8,7 +8,7 @@ import React, {
 import { Dialog, Transition } from '@headlessui/react';
 import styled from '@emotion/styled';
 
-import { findPath } from 'utils/rythm';
+import { findPath } from 'utils/rhythm';
 import PanelButton from 'components/PanelButton';
 import { Solution } from 'interfaces/data';
 import ResolverWorker from 'utils/resolver.worker';
@@ -19,12 +19,12 @@ import SolutionPanel from './SolutionPanel';
 import { useRef } from 'react';
 
 interface ResolverProps {
-  rythm?: string;
+  rhythm?: string;
 }
 
 const Resolver = (props: ResolverProps) => {
-  const { rythm: propsRythm } = props;
-  const [rythm, setRythm] = useState(propsRythm);
+  const { rhythm: propsRhythm } = props;
+  const [rhythm, setRhythm] = useState(propsRhythm);
   const [open, setOpen] = useState<boolean>(true);
   const [solutions, setSolutions] = useState<Solution[]>([]);
   const [resolverStatus, setResolverStatus] = useState<
@@ -35,7 +35,7 @@ const Resolver = (props: ResolverProps) => {
   const activeWorker = useRef<Worker | null>(null);
 
   useEffect(() => {
-    if (rythm) {
+    if (rhythm) {
       setOpen(true);
       setResolverStatus('loading');
 
@@ -48,16 +48,16 @@ const Resolver = (props: ResolverProps) => {
         };
 
         worker.postMessage({
-          rythm,
+          rhythm,
           options: { preferGrab: preference === 'Grab' },
         });
       } else {
-        const result = findPath(rythm);
+        const result = findPath(rhythm);
         setSolutions(result);
         setResolverStatus('result');
       }
     }
-  }, [rythm, preference]);
+  }, [rhythm, preference]);
 
   const handleClicked = useCallback(() => {
     setOpen(true);
@@ -95,7 +95,7 @@ const Resolver = (props: ResolverProps) => {
   const handleReset = useCallback(() => {
     activeWorker?.current?.terminate();
     setInput('');
-    setRythm('');
+    setRhythm('');
     setResolverStatus('input');
   }, []);
 
@@ -104,7 +104,7 @@ const Resolver = (props: ResolverProps) => {
     const target = e.target as typeof e.target & {
       input: { value: string };
     };
-    setRythm(target.input.value);
+    setRhythm(target.input.value);
   }, []);
 
   return (
@@ -201,7 +201,7 @@ const Resolver = (props: ResolverProps) => {
   );
 };
 Resolver.defaultProps = {
-  rythm: '',
+  rhythm: '',
 };
 
 export default Resolver;
