@@ -8,6 +8,7 @@ import GlobalStyle from 'components/GlobalStyle';
 import Note from 'components/Note';
 import Resolver from 'components/Resolver';
 import DarkTheme from 'themes/darkTheme';
+import Tapper from 'components/Tapper';
 
 declare module '@emotion/react' {
   export interface Theme {
@@ -60,6 +61,7 @@ const IndexPage = () => {
           <p className="my-4">Current version is priority to device.</p>
         </div>
         <div className="absolute bottom-0 inset-x-0 p-4 flex justify-end">
+          <Tapper />
           <Resolver />
         </div>
       </div>
