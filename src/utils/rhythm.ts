@@ -91,7 +91,7 @@ const validate = ({
     case 'GA':
       return [sound, { left: leftSymbol, right: rightSymbol }];
     default:
-      throw new Error('illegal rythm');
+      throw new Error('illegal rhythm');
   }
 };
 
@@ -294,7 +294,7 @@ type Options = {
   preferGrab?: boolean;
 };
 
-const resolveTechniques = (rythm: string) => {
+const resolveTechniques = (rhythm: string) => {
   // [2, 6]: start in forward
   const startPositions = [2, 6, 0, 4];
   const positionTable = getPositionTable();
@@ -319,8 +319,8 @@ const resolveTechniques = (rythm: string) => {
   });
 
   // BFS
-  for (let i = 0; i !== rythm.length; i += 1) {
-    const beat = rythm[i];
+  for (let i = 0; i !== rhythm.length; i += 1) {
+    const beat = rhythm[i];
     const nextCandidates: Array<Beat[]> = [];
     candidates.forEach((candidate) => {
       const lastBeat = candidate[candidate.length - 1];
@@ -361,11 +361,11 @@ const injectTags = (solutions: Solution[]): Solution[] =>
   });
 
 export const findPath = (
-  rythm: string = '',
+  rhythm: string = '',
   options: Options = {}
 ): Solution[] => {
   const { preferGrab = false } = options;
-  const candidates = resolveTechniques(rythm);
+  const candidates = resolveTechniques(rhythm);
   const finalCandidates = filterCyclic(candidates);
   const solutions = candidates2Solutions(finalCandidates, preferGrab);
   const filtered = filterRedundantSolutions(solutions);
