@@ -29,8 +29,7 @@ export const getPositionTable = (): Symbol[][] => {
   // AirTurn
   positionTable[2][8] = 'A';
   positionTable[8][9] = '_';
-  positionTable[9][10] = '_';
-  positionTable[10][2] = '_';
+  positionTable[9][3] = '_';
   return positionTable;
 };
 
@@ -219,13 +218,14 @@ const preferF = (candidate: Array<Beat>, symmetry: boolean): Array<Beat> => {
 
 const way = (p: number) => {
   switch (p) {
-    case 2:
-    case 6:
-      return 'f';
     case 0:
     case 4:
-    default:
       return 'b';
+    case 2:
+    case 6:
+    case 9:
+    default:
+      return 'f';
   }
 };
 const getDirection = (position: Position): StartDirection => {
@@ -296,7 +296,7 @@ type Options = {
 
 const resolveTechniques = (rhythm: string) => {
   // [2, 6]: start in forward
-  const startPositions = [2, 6, 0, 4];
+  const startPositions = [2, 6, 9, 0, 4];
   const positionTable = getPositionTable();
 
   // initial
