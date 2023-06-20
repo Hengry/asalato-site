@@ -1,4 +1,4 @@
-import { Tag } from 'interfaces/data';
+import { Tag } from 'interfaces/index';
 
 // change to icons in the future
 export default (tag: string) => {

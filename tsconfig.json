@@ -10,7 +10,7 @@
       "pages/*": ["./src/pages/*"],
       "themes/*": ["./src/themes/*"],
       "components/*": ["./src/components/*"],
-      "interfaces/*": ["./src/interfaces/*"],
+      "interfaces/*": ["src/types/*"],
       "utils/*": ["./src/utils/*"]
     },
     // "allowJs": true,

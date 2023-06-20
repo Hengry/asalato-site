@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Notation from 'components/Notation';
 import Tag from 'components/Tag';
 import SearchIcon from 'components/icons/SearchIcon';
-import { Solution } from 'interfaces/data';
+import { Solution } from 'interfaces/index';
 
 import SolutionDirection from './SolutionDirection';
 import { useEffect } from 'react';
@@ -76,9 +76,9 @@ const SolutionPanel = (props: SolutionTableProps) => {
   }, [solutions, filters]);
 
   return (
-    <div className="relative flex-1 mx-4 overflow-auto text-center">
-      <div className="inline-flex flex-wrap mt-4 mx-8 pb-0.5 items-center relative">
-        <div className="mr-2 top-2 text-gray-500 absolute right-full">
+    <div className='relative flex-1 mx-4 overflow-auto text-center'>
+      <div className='inline-flex flex-wrap mt-4 mx-8 pb-0.5 items-center relative'>
+        <div className='mr-2 top-2 text-gray-500 absolute right-full'>
           <SearchIcon />
         </div>
         {options.map((option) => (
@@ -92,17 +92,17 @@ const SolutionPanel = (props: SolutionTableProps) => {
         ))}
       </div>
       <SolutionDirection />
-      <div className="flex px-2 py-1 text-gray-500">
+      <div className='flex px-2 py-1 text-gray-500'>
         {filteredSolutions.length} results
       </div>
       {filteredSolutions.length > 0 ? (
         filteredSolutions.map(({ key, text, tags }, index) => (
-          <div key={key} className="table py-1">
-            <div className="flex items-center">
+          <div key={key} className='table py-1'>
+            <div className='flex items-center'>
               {tags.map((tag) => (
                 <Tag key={tag}>{tag}</Tag>
               ))}
-              <div className="ml-auto">{index + 1}</div>
+              <div className='ml-auto'>{index + 1}</div>
             </div>
             <Notation values={text} />
           </div>

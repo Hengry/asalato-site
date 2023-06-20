@@ -8,9 +8,9 @@ import React, {
 import { Dialog, Transition } from '@headlessui/react';
 import styled from '@emotion/styled';
 
-import { findPath } from 'utils/rhythm';
+import { findPath } from 'src/features/rhythm';
 import PanelButton from 'components/PanelButton';
-import { Solution } from 'interfaces/data';
+import { Solution } from 'interfaces/index';
 import ResolverWorker from 'utils/resolver.worker';
 import Asalato from 'components/icons/Asalato';
 

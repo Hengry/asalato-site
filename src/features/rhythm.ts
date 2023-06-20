@@ -3,37 +3,62 @@ import range from 'lodash/range';
 import get from 'lodash/get';
 import {
   Position,
-  Symbol,
+  Technique,
   Solution,
   Mark,
   Beat,
   Tag,
   StartDirection,
-} from 'interfaces/data';
+  PositionName,
+  UpsidePosition,
+} from 'interfaces/index';
+import { getEntries, getKeys } from 'utils/index';
 
-export const getPositionTable = (): Symbol[][] => {
-  const positionTable: Symbol[][] = new Array(11).fill(undefined).map(() => []);
-  positionTable[0][1] = '_';
-  positionTable[1][0] = '_';
-  positionTable[1][4] = 'S';
-  positionTable[2][1] = 'G';
-  positionTable[2][3] = '_';
-  positionTable[3][2] = '_';
-  positionTable[4][5] = '_';
-  positionTable[5][4] = '_';
-  positionTable[5][6] = 'G';
-  positionTable[6][3] = 'S';
-  positionTable[6][7] = 'C';
-  positionTable[7][6] = '_';
-
-  // AirTurn
-  positionTable[2][8] = 'A';
-  positionTable[8][9] = '_';
-  positionTable[9][3] = '_';
-  return positionTable;
+type Connections = {
+  [P in PositionName]?: Technique;
 };
 
-const unifySymbol = (symbol: Symbol): Symbol => {
+const positionConnectionsTable: {
+  [P in PositionName]: Connections;
+} = {
+  inTopHandUpsideShake: {
+    inTopHandDownsideShake: '_',
+  },
+  inTopHandDownsideShake: {
+    inTopHandUpsideShake: '_',
+    backwardOffHandUpsideShake: 'S',
+  },
+  forwardOffHandUpsideShake: {
+    inTopHandDownsideShake: 'G',
+    forwardOffHandDownsideShake: '_',
+    airTurnDownsideShake: 'A',
+  },
+  forwardOffHandDownsideShake: {
+    forwardOffHandUpsideShake: '_',
+  },
+  backwardOffHandUpsideShake: {
+    backwardOffHandDownsideShake: '_',
+  },
+  backwardOffHandDownsideShake: {
+    backwardOffHandUpsideShake: '_',
+    inBottomHandUpsideShake: 'G',
+  },
+  inBottomHandUpsideShake: {
+    forwardOffHandDownsideShake: 'S',
+    inBottomHandDownsideShake: 'C',
+  },
+  inBottomHandDownsideShake: {
+    inBottomHandUpsideShake: '_',
+  },
+  airTurnUpsideShake: {
+    forwardOffHandDownsideShake: '_',
+  },
+  airTurnDownsideShake: {
+    airTurnUpsideShake: '_',
+  },
+};
+
+const unifyTechnique = (symbol: Technique): Technique => {
   switch (symbol) {
     case 'S':
       return 'C';
@@ -43,52 +68,59 @@ const unifySymbol = (symbol: Symbol): Symbol => {
 };
 
 const validate = ({
-  leftSymbol,
-  rightSymbol,
+  leftHandTechnique,
+  rightHandTechnique,
   sound,
 }: {
-  leftSymbol: Symbol;
-  rightSymbol: Symbol;
+  leftHandTechnique?: Technique;
+  rightHandTechnique?: Technique;
   sound: boolean;
-}): [boolean, Mark?] => {
-  const left = unifySymbol(leftSymbol);
-  const right = unifySymbol(rightSymbol);
+}): false | Mark => {
+  if (!leftHandTechnique || !rightHandTechnique) return false;
+  const left = unifyTechnique(leftHandTechnique);
+  const right = unifyTechnique(rightHandTechnique);
   switch (`${left}${right}`) {
     case '__':
-      return [!sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case '_C':
-      return [true, { left: leftSymbol, right: sound ? rightSymbol : '_' }];
+      return {
+        left: leftHandTechnique,
+        right: sound ? rightHandTechnique : '_',
+      };
     case '_G':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case 'C_':
-      return [true, { left: sound ? leftSymbol : '_', right: rightSymbol }];
+      return {
+        left: sound ? leftHandTechnique : '_',
+        right: rightHandTechnique,
+      };
     case 'CC': // not sure
-      return [
-        true,
-        { left: sound ? leftSymbol : '_', right: sound ? rightSymbol : '_' },
-      ];
+      return {
+        left: sound ? leftHandTechnique : '_',
+        right: sound ? rightHandTechnique : '_',
+      };
     case 'CG':
-      return [sound, { left: '_', right: rightSymbol }];
+      return sound && { left: '_', right: rightHandTechnique };
     case 'G_':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case 'GC':
-      return [sound, { left: leftSymbol, right: '_' }];
+      return sound && { left: leftHandTechnique, right: '_' };
     case 'GG':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case 'A_':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case 'AC':
-      return [sound, { left: leftSymbol, right: '_' }];
+      return sound && { left: leftHandTechnique, right: '_' };
     case 'AG':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case 'AA':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case '_A':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     case 'CA':
-      return [sound, { left: '_', right: rightSymbol }];
+      return sound && { left: '_', right: rightHandTechnique };
     case 'GA':
-      return [sound, { left: leftSymbol, right: rightSymbol }];
+      return sound && { left: leftHandTechnique, right: rightHandTechnique };
     default:
       throw new Error('illegal rhythm');
   }
@@ -96,29 +128,34 @@ const validate = ({
 
 const findNextPositions = (
   lastPosition: Position,
-  positionTable: Symbol[][],
   sound: boolean
 ): Array<Beat> => {
   const { left, right } = lastPosition;
   const possibleCandidates: Array<Beat> = [];
-  positionTable[left].forEach((leftSymbol, li) => {
-    positionTable[right].forEach((rightSymbol, ri) => {
-      const [valid, next]: [boolean, Mark?] = validate({
-        leftSymbol,
-        rightSymbol,
-        sound,
-      });
-      if (valid && next) {
-        possibleCandidates.push({
-          mark: next,
-          position: {
-            left: li,
-            right: ri,
-          },
-        });
-      }
-    });
-  });
+  const a = getEntries(positionConnectionsTable[left]);
+  a.forEach((vv) => 1);
+  getEntries(positionConnectionsTable[left]).forEach(
+    ([leftHandPosition, leftHandTechnique]) => {
+      getEntries(positionConnectionsTable[right]).forEach(
+        ([rightHandPosition, rightHandTechnique]) => {
+          const next = validate({
+            leftHandTechnique,
+            rightHandTechnique,
+            sound,
+          });
+          if (next) {
+            possibleCandidates.push({
+              mark: next,
+              position: {
+                left: leftHandPosition,
+                right: rightHandPosition,
+              },
+            });
+          }
+        }
+      );
+    }
+  );
   return possibleCandidates;
 };
 
@@ -295,14 +332,14 @@ type Options = {
 };
 
 const resolveTechniques = (rhythm: string) => {
-  // [2, 6]: start in forward
-  const startPositions = [2, 6, 9, 0, 4];
-  const positionTable = getPositionTable();
+  const startPositions = Object.keys(positionConnectionsTable).filter((name) =>
+    name.includes('UpsideShake')
+  ) as UpsidePosition[];
 
   // initial
   let candidates: Array<Beat[]> = [];
-  startPositions.forEach((left) => {
-    startPositions.forEach((right) => {
+  startPositions.forEach((leftHandPosition) => {
+    startPositions.forEach((rightHandPosition) => {
       candidates.push([
         {
           mark: {
@@ -310,8 +347,8 @@ const resolveTechniques = (rhythm: string) => {
             right: '_',
           },
           position: {
-            left,
-            right,
+            left: leftHandPosition,
+            right: rightHandPosition,
           },
         },
       ]);
@@ -326,7 +363,6 @@ const resolveTechniques = (rhythm: string) => {
       const lastBeat = candidate[candidate.length - 1];
       const nextPossibleBeats: Array<Beat> = findNextPositions(
         lastBeat.position,
-        positionTable,
         !(beat === '0' || beat === '_')
       );
       nextPossibleBeats.forEach((nextBeat) => {
