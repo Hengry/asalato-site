@@ -11,7 +11,6 @@ import styled from '@emotion/styled';
 import { findPath } from '@/utils/rhythm';
 import PanelButton from '@/components/PanelButton';
 import { Solution } from '@/interfaces/data';
-import ResolverWorker from '@/utils/resolver.worker';
 import Asalato from '@/components/icons/Asalato';
 
 import InputDirection from './InputDirection';
@@ -40,7 +39,8 @@ const Resolver = (props: ResolverProps) => {
       setResolverStatus('loading');
 
       if (window.Worker) {
-        const worker = new ResolverWorker();
+        const worker = new Worker('@/utils/resolver.worker');
+        // const worker = new ResolverWorker();
         activeWorker.current = worker;
         worker.onmessage = (msg: MessageEvent) => {
           setResolverStatus('result');
