@@ -13,7 +13,7 @@ export const useResolver = () => useContext(ResolverContext);
 export const useInitResolver = (): [string, boolean, (s: string) => void] => {
   const [resolverInput, setResolverInput] = useState<string>('');
   const [openResolver, setOpenResolver] = useState<boolean>(false);
-  const triggerResolver = useCallback((input) => {
+  const triggerResolver = useCallback((input: string) => {
     setResolverInput(input);
     setOpenResolver(true);
   }, []);

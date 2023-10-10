@@ -2,7 +2,7 @@ import React from 'react';
 import tagAbbr from '@/utils/tagAbbr';
 
 interface TagProps {
-  active: boolean;
+  active?: boolean;
   children: React.ReactNode;
   onClick?: () => void;
 }

@@ -36,13 +36,15 @@ const InputDirection = () => {
             <div className='flex pt-4'>
               <div className='mr-3'>X:</div>
               <div>
-                beat, key in 'X', 'x', '1' or tap the 'X' in Input Area 2
+                beat, key in &apos;X&apos;, &apos;x&apos;, &apos;1&apos; or tap
+                the &apos;X&apos; in Input Area 2
               </div>
             </div>
             <div className='flex mt-4'>
               <div className='mr-3'>_:</div>
               <div>
-                off-beat, key in any other keys or tap the '_' in Input Area 2
+                off-beat, key in any other keys or tap the &apos;_&apos; in
+                Input Area 2
               </div>
             </div>
           </div>

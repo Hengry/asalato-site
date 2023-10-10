@@ -171,7 +171,7 @@ const Resolver = (props: ResolverProps) => {
                 </div>
               )}
               {resolverStatus === 'loading' && (
-                <div className='flex-1 m-4 p-2'>I'm Calculating...</div>
+                <div className='flex-1 m-4 p-2'>I&apos;m Calculating...</div>
               )}
               {resolverStatus === 'result' && (
                 <SolutionPanel solutions={solutions} />

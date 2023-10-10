@@ -1,7 +1,7 @@
-import { Tag } from 'interfaces/data';
+import { Tag } from '@/interfaces/data';
 
 // change to icons in the future
-export default (tag: string) => {
+export default function tagAbbr(tag: string) {
   switch (tag) {
     case 'forward':
       return 'f';
@@ -20,4 +20,4 @@ export default (tag: string) => {
     default:
       return 'x';
   }
-};
+}

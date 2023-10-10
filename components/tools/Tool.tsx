@@ -17,7 +17,6 @@ import { Popover } from '@headlessui/react';
 // );
 
 const Tool = styled(Popover.Button)`
-  background-color: ${({ theme }) => theme.colors.primary.main};
   width: 32px;
   height: 32px;
   border-radius: 16px;

@@ -49,7 +49,7 @@ const SolutionPanel = (props: SolutionTableProps) => {
   }, []);
 
   const handleFilterTagClicked = useCallback(
-    (option) => () => {
+    (option: string) => () => {
       setFilters((prev) => {
         if (prev.includes(option)) {
           const index = prev.findIndex((e) => e === option);

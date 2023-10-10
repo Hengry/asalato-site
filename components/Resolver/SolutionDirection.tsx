@@ -58,7 +58,7 @@ const SolutionDirection = () => {
               <div className='text-center'>{cat}</div>
               <div className='text-sm'>
                 {Object.keys(filterOptions[cat]).map((name) => (
-                  <div className='flex items-center m-1'>
+                  <div key={name} className='flex items-center m-1'>
                     <Tag>{name}</Tag>
                     <div className='flex-1 ml-1'>
                       {name}, {filterOptions[cat][name]}
@@ -70,7 +70,7 @@ const SolutionDirection = () => {
           ))}
           <div className='ml-2 mt-4'>About Solution/Technique Symbol:</div>
           {Object.keys(symbols).map((symbol) => (
-            <div className='ml-2'>
+            <div key={symbol} className='ml-2'>
               {symbol}: {symbols[symbol]}
             </div>
           ))}

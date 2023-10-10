@@ -11,8 +11,8 @@ const Note = (props: NoteType) => {
   return (
     <div className='rounded p-2 bg-surface'>
       <div>{title}</div>
-      {detail.map((d) => (
-        <div>{d}</div>
+      {detail.map((d, index) => (
+        <div key={index}>{d}</div>
       ))}
     </div>
   );
