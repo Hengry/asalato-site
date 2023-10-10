@@ -9,7 +9,7 @@ import {
   Beat,
   Tag,
   StartDirection,
-} from 'interfaces/data';
+} from '@/interfaces/data';
 
 export const getPositionTable = (): Symbol[][] => {
   const positionTable: Symbol[][] = new Array(11).fill(undefined).map(() => []);

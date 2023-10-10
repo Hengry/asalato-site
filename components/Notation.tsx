@@ -37,13 +37,13 @@ const Notation = (props: NotationProps) => {
   }, [values]);
 
   return (
-    <div onClick={onClick} className="flex p-2 tracking-widest">
+    <div onClick={onClick} className='flex p-2 tracking-widest'>
       {bars.map((bar, index) => (
-        <div key={index} className="border-r first:border-l px-1">
+        <div key={index} className='border-r first:border-l px-1'>
           {bar.map((row, index) => (
-            <div key={index} className="flex">
+            <div key={index} className='flex'>
               {row.map((beat, index) => (
-                <div key={index} className="flex px-1">
+                <div key={index} className='flex px-1'>
                   {beat}
                 </div>
               ))}
