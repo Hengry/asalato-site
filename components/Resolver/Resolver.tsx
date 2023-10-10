@@ -39,7 +39,9 @@ const Resolver = (props: ResolverProps) => {
       setResolverStatus('loading');
 
       if (window.Worker) {
-        const worker = new Worker('@/utils/resolver.worker');
+        const worker = new Worker(
+          new URL('../../utils/resolver.worker.ts', import.meta.url)
+        );
         // const worker = new ResolverWorker();
         activeWorker.current = worker;
         worker.onmessage = (msg: MessageEvent) => {
@@ -136,16 +138,14 @@ const Resolver = (props: ResolverProps) => {
             <div className='fixed z-10 top-0 inset-x-0 bottom-32 flex flex-col border-b border-surface bg-background bg-opacity-80 backdrop-filter backdrop-blur'>
               <div className='bg-surface mx-4 mt-4 h-20 p-4 rounded-xl'>
                 <div className='flex'>
-                  {
-                    <input
-                      name='input'
-                      type='text'
-                      value={input}
-                      onChange={handleChange}
-                      className='tracking-widest flex-1'
-                      disabled={resolverStatus === 'loading'}
-                    />
-                  }
+                  <input
+                    name='input'
+                    type='text'
+                    value={input}
+                    onChange={handleChange}
+                    className='tracking-widest flex-1 bg-transparent'
+                    disabled={resolverStatus === 'loading'}
+                  />
                 </div>
                 <div className='flex justify-end py-2'>
                   Prefer
