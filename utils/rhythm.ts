@@ -1,6 +1,6 @@
-import cloneDeep from 'lodash/cloneDeep';
-import range from 'lodash/range';
-import get from 'lodash/get';
+import cloneDeep from 'lodash-es/cloneDeep';
+import range from 'lodash-es/range';
+import get from 'lodash-es/get';
 import {
   Position,
   Symbol,

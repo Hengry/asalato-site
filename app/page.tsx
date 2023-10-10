@@ -4,6 +4,8 @@ import Image from 'next/image';
 import tw from 'twin.macro';
 import { twJoin } from 'tailwind-merge';
 
+import Resolver from '@/components/Resolver';
+
 const Title = tw.div`p-8`;
 export default function Home() {
   return (
@@ -27,6 +29,7 @@ export default function Home() {
           height={37}
           priority
         />
+        <Resolver />
       </div>
       <Title>Starter from Hengry</Title>
     </main>

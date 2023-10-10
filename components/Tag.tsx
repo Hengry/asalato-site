@@ -7,7 +7,7 @@ interface TagProps {
   onClick?: () => void;
 }
 const Tag = (props: TagProps) => {
-  const { active, children, onClick } = props;
+  const { active = true, children, onClick } = props;
   const display = typeof children === 'string' ? tagAbbr(children) : children;
   return (
     <div
@@ -21,9 +21,6 @@ const Tag = (props: TagProps) => {
       {display}
     </div>
   );
-};
-Tag.defaultProps = {
-  active: true,
 };
 
 export default Tag;

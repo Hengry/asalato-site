@@ -6,20 +6,16 @@ interface NoteType {
   detail: string[];
 }
 const Note = (props: NoteType) => {
-  const { selected, title, detail } = props;
+  const { selected = false, title, detail = [] } = props;
 
   return (
-    <div className="rounded p-2 bg-surface">
+    <div className='rounded p-2 bg-surface'>
       <div>{title}</div>
       {detail.map((d) => (
         <div>{d}</div>
       ))}
     </div>
   );
-};
-Note.defaultProps = {
-  detail: [],
-  selected: false,
 };
 
 export default Note;

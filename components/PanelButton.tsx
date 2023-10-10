@@ -11,7 +11,7 @@ interface PanelButtonProps {
   color?: 'main' | 'transparent';
 }
 const PanelButton = (props: PanelButtonProps) => {
-  const { children, type, onClick, color } = props;
+  const { children, type = 'button', onClick, color } = props;
   return (
     <button
       type={type}
@@ -23,9 +23,6 @@ const PanelButton = (props: PanelButtonProps) => {
       {children}
     </button>
   );
-};
-PanelButton.defaultProps = {
-  type: 'button',
 };
 
 export default PanelButton;

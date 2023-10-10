@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import chunk from 'lodash/chunk';
+import chunk from 'lodash-es/chunk';
 
 const guessMeter = (length: number) => {
   const beats = length / 2;
@@ -53,10 +53,6 @@ const Notation = (props: NotationProps) => {
       ))}
     </div>
   );
-};
-Notation.defaultProps = {
-  startStyle: 'default',
-  endStyle: 'default',
 };
 
 export default React.memo(Notation);

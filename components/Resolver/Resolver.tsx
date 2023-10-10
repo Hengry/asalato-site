@@ -23,7 +23,7 @@ interface ResolverProps {
 }
 
 const Resolver = (props: ResolverProps) => {
-  const { rhythm: propsrhythm } = props;
+  const { rhythm: propsrhythm = '' } = props;
   const [rhythm, setrhythm] = useState(propsrhythm);
   const [open, setOpen] = useState<boolean>(true);
   const [solutions, setSolutions] = useState<Solution[]>([]);
@@ -199,9 +199,6 @@ const Resolver = (props: ResolverProps) => {
       </Transition>
     </>
   );
-};
-Resolver.defaultProps = {
-  rhythm: '',
 };
 
 export default Resolver;
