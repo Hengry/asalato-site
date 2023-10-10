@@ -1,5 +1,5 @@
 import React from 'react';
-import tagAbbr from 'utils/tagAbbr';
+import tagAbbr from '@/utils/tagAbbr';
 
 interface TagProps {
   active: boolean;
