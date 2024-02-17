@@ -7,6 +7,8 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Asalato Resolver',
   description: 'Resolve rhythm to asalato techniques',
+  generator: 'Next.js',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
